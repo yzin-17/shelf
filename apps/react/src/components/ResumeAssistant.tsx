@@ -1,20 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
-import { Send, X, Briefcase, UserCheck } from 'lucide-react'
-import { Streamdown } from 'streamdown'
-import { Store } from '@tanstack/store'
+import { useEffect, useRef, useState } from 'react';
+import { Send, X, Briefcase, UserCheck } from 'lucide-react';
+import { Streamdown } from 'streamdown';
+import { Store } from '@tanstack/store';
 
-import { useResumeChat } from '#/lib/resume-ai-hook'
-import type { ResumeChatMessages } from '#/lib/resume-ai-hook'
+import { useResumeChat } from '#/lib/resume-ai-hook';
+import type { ResumeChatMessages } from '#/lib/resume-ai-hook';
 
 function Messages({ messages }: { messages: ResumeChatMessages }) {
-  const messagesContainerRef = useRef<HTMLDivElement>(null)
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop =
-        messagesContainerRef.current.scrollHeight
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
     }
-  }, [messages])
+  }, [messages]);
 
   if (!messages.length) {
     return (
@@ -23,14 +22,12 @@ function Messages({ messages }: { messages: ResumeChatMessages }) {
           <Briefcase className="w-12 h-12 text-blue-400/40 animate-pulse" />
           <UserCheck className="w-6 h-6 text-purple-400/60 absolute -bottom-1 -right-1" />
         </div>
-        <p className="text-center text-slate-200/80 font-medium">
-          Welcome, Recruiter!
-        </p>
+        <p className="text-center text-slate-200/80 font-medium">Welcome, Recruiter!</p>
         <p className="text-xs text-slate-300/40 mt-2 text-center max-w-[200px]">
           Ask about skills, experience, or qualifications...
         </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -61,45 +58,47 @@ function Messages({ messages }: { messages: ResumeChatMessages }) {
                     <Streamdown>{part.content}</Streamdown>
                   </div>
                 </div>
-              )
+              );
             }
-            return null
+            return null;
           })}
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 // Export store for header control
-export const showResumeAssistant = new Store(false)
+// oxlint-disable-next-line react/only-export-components
+export const showResumeAssistant = new Store(false);
 
 export default function ResumeAssistant() {
-  const [isOpen, setIsOpen] = useState(false)
-  const { messages, sendMessage, isLoading } = useResumeChat()
-  const [input, setInput] = useState('')
+  const [isOpen, setIsOpen] = useState(false);
+  const { messages, sendMessage, isLoading } = useResumeChat();
+  const [input, setInput] = useState('');
 
   // Sync with store for header control
   useEffect(() => {
-    return showResumeAssistant.subscribe(() => {
-      setIsOpen(showResumeAssistant.state)
-    })
-  }, [])
+    const sub = showResumeAssistant.subscribe(() => {
+      setIsOpen(showResumeAssistant.state);
+    });
+    return sub.unsubscribe;
+  }, []);
 
   const handleToggle = () => {
-    const newState = !isOpen
-    setIsOpen(newState)
-    showResumeAssistant.setState(() => newState)
-  }
+    const newState = !isOpen;
+    setIsOpen(newState);
+    showResumeAssistant.setState(() => newState);
+  };
 
   const handleSend = () => {
     if (input.trim()) {
-      sendMessage(input)
-      setInput('')
+      sendMessage(input);
+      setInput('');
     }
-  }
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="fixed top-20 right-4 z-[100] w-[400px] h-[520px] rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-blue-500/20 backdrop-blur-xl bg-linear-to-b from-slate-900/98 via-slate-900/95 to-slate-800/98">
@@ -113,9 +112,7 @@ export default function ResumeAssistant() {
             <Briefcase className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h3 className="font-bold text-slate-200 text-base tracking-tight">
-              Resume Assistant
-            </h3>
+            <h3 className="font-bold text-slate-200 text-base tracking-tight">Resume Assistant</h3>
             <p className="text-xs text-blue-300/50">Candidate Evaluation AI</p>
           </div>
         </div>
@@ -148,8 +145,8 @@ export default function ResumeAssistant() {
       <div className="relative p-4 border-t border-blue-500/10 bg-slate-900/50">
         <form
           onSubmit={(e) => {
-            e.preventDefault()
-            handleSend()
+            e.preventDefault();
+            handleSend();
           }}
         >
           <div className="relative">
@@ -162,19 +159,14 @@ export default function ResumeAssistant() {
               rows={1}
               style={{ minHeight: '48px', maxHeight: '100px' }}
               onInput={(e) => {
-                const target = e.target as HTMLTextAreaElement
-                target.style.height = 'auto'
-                target.style.height = Math.min(target.scrollHeight, 100) + 'px'
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = 'auto';
+                target.style.height = Math.min(target.scrollHeight, 100) + 'px';
               }}
               onKeyDown={(e) => {
-                if (
-                  e.key === 'Enter' &&
-                  !e.shiftKey &&
-                  input.trim() &&
-                  !isLoading
-                ) {
-                  e.preventDefault()
-                  handleSend()
+                if (e.key === 'Enter' && !e.shiftKey && input.trim() && !isLoading) {
+                  e.preventDefault();
+                  handleSend();
                 }
               }}
             />
@@ -189,5 +181,5 @@ export default function ResumeAssistant() {
         </form>
       </div>
     </div>
-  )
+  );
 }
