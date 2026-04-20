@@ -1,33 +1,32 @@
-import { useEffect, useRef, useState } from 'react'
-import { useStore } from '@tanstack/react-store'
-import { Store } from '@tanstack/store'
+import { useEffect, useRef, useState } from 'react';
+import { useStore } from '@tanstack/react-store';
+import { Store } from '@tanstack/store';
 
-import { Send, X, ChevronRight, BotIcon } from 'lucide-react'
-import { Streamdown } from 'streamdown'
+import { Send, X, ChevronRight, BotIcon } from 'lucide-react';
+import { Streamdown } from 'streamdown';
 
-import { useGuitarRecommendationChat } from '#/lib/demo-ai-hook'
-import type { ChatMessages } from '#/lib/demo-ai-hook'
+import { useGuitarRecommendationChat } from '#/lib/demo-ai-hook';
+import type { ChatMessages } from '#/lib/demo-ai-hook';
 
-import GuitarRecommendation from './demo-GuitarRecommendation'
+import GuitarRecommendation from './demo-GuitarRecommendation';
 
-export const showAIAssistant = new Store(false)
+export const showAIAssistant = new Store(false);
 
 function Messages({ messages }: { messages: ChatMessages }) {
-  const messagesContainerRef = useRef<HTMLDivElement>(null)
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop =
-        messagesContainerRef.current.scrollHeight
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
     }
-  }, [messages])
+  }, [messages]);
 
   if (!messages.length) {
     return (
       <div className="flex-1 flex items-center justify-center text-gray-400 text-sm">
         Ask me anything! I'm here to help.
       </div>
-    )
+    );
   }
 
   return (
@@ -58,36 +57,32 @@ function Messages({ messages }: { messages: ChatMessages }) {
                     <Streamdown>{part.content}</Streamdown>
                   </div>
                 </div>
-              )
+              );
             }
-            if (
-              part.type === 'tool-call' &&
-              part.name === 'recommendGuitar' &&
-              part.output
-            ) {
+            if (part.type === 'tool-call' && part.name === 'recommendGuitar' && part.output) {
               return (
                 <div key={part.id} className="max-w-[80%] mx-auto">
                   <GuitarRecommendation id={String(part.output?.id)} />
                 </div>
-              )
+              );
             }
           })}
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 export default function AIAssistant() {
-  const isOpen = useStore(showAIAssistant, (state) => state)
-  const { messages, sendMessage } = useGuitarRecommendationChat()
-  const [input, setInput] = useState('')
+  const isOpen = useStore(showAIAssistant, (state) => state);
+  const { messages, sendMessage } = useGuitarRecommendationChat();
+  const [input, setInput] = useState('');
 
   return (
     <div className="relative z-50">
       <button
         onClick={() => showAIAssistant.setState((state) => !state)}
-        className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg bg-linear-to-r from-green-700 to-green-900 text-white hover:opacity-90 transition-opacity"
+        className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg bg-linear-to-r from-green-700 to-green-900 text-white hover:opacity-90 transition-opacity whitespace-nowrap"
       >
         <div className="flex items-center gap-2">
           <BotIcon size={24} />
@@ -97,7 +92,7 @@ export default function AIAssistant() {
       </button>
 
       {isOpen && (
-        <div className="absolute bottom-0 left-full ml-2 w-[700px] h-[600px] bg-gray-900 rounded-lg shadow-xl border border-orange-500/20 flex flex-col">
+        <div className="absolute top-0 left-full ml-2 w-[700px] h-[600px] bg-gray-900 rounded-lg shadow-xl border border-orange-500/20 flex flex-col">
           <div className="flex items-center justify-between p-3 border-b border-orange-500/20">
             <h3 className="font-semibold text-white">AI Assistant</h3>
             <button
@@ -113,10 +108,10 @@ export default function AIAssistant() {
           <div className="p-3 border-t border-orange-500/20">
             <form
               onSubmit={(e) => {
-                e.preventDefault()
+                e.preventDefault();
                 if (input.trim()) {
-                  sendMessage(input)
-                  setInput('')
+                  sendMessage(input);
+                  setInput('');
                 }
               }}
             >
@@ -129,16 +124,15 @@ export default function AIAssistant() {
                   rows={1}
                   style={{ minHeight: '36px', maxHeight: '120px' }}
                   onInput={(e) => {
-                    const target = e.target as HTMLTextAreaElement
-                    target.style.height = 'auto'
-                    target.style.height =
-                      Math.min(target.scrollHeight, 120) + 'px'
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = 'auto';
+                    target.style.height = Math.min(target.scrollHeight, 120) + 'px';
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey && input.trim()) {
-                      e.preventDefault()
-                      sendMessage(input)
-                      setInput('')
+                      e.preventDefault();
+                      sendMessage(input);
+                      setInput('');
                     }
                   }}
                 />
@@ -155,5 +149,5 @@ export default function AIAssistant() {
         </div>
       )}
     </div>
-  )
+  );
 }
