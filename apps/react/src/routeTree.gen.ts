@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
 import { Route as DemoMcpTodosRouteImport } from './routes/demo/mcp-todos'
+import { Route as DemoInfiniteScrollRouteImport } from './routes/demo/infinite-scroll'
 import { Route as DemoAiStructuredRouteImport } from './routes/demo/ai-structured'
 import { Route as DemoAiImageRouteImport } from './routes/demo/ai-image'
 import { Route as DemoAiChatRouteImport } from './routes/demo/ai-chat'
@@ -56,6 +57,11 @@ const DemoStoreRoute = DemoStoreRouteImport.update({
 const DemoMcpTodosRoute = DemoMcpTodosRouteImport.update({
   id: '/demo/mcp-todos',
   path: '/demo/mcp-todos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoInfiniteScrollRoute = DemoInfiniteScrollRouteImport.update({
+  id: '/demo/infinite-scroll',
+  path: '/demo/infinite-scroll',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoAiStructuredRoute = DemoAiStructuredRouteImport.update({
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -190,6 +199,7 @@ export interface FileRouteTypes {
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
+    | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
     | '/demo/store'
     | '/demo/tanstack-query'
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
+    | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
     | '/demo/store'
     | '/demo/tanstack-query'
@@ -230,6 +241,7 @@ export interface FileRouteTypes {
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
+    | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
     | '/demo/store'
     | '/demo/tanstack-query'
@@ -251,6 +263,7 @@ export interface RootRouteChildren {
   DemoAiChatRoute: typeof DemoAiChatRoute
   DemoAiImageRoute: typeof DemoAiImageRoute
   DemoAiStructuredRoute: typeof DemoAiStructuredRoute
+  DemoInfiniteScrollRoute: typeof DemoInfiniteScrollRoute
   DemoMcpTodosRoute: typeof DemoMcpTodosRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
@@ -306,6 +319,13 @@ declare module '@tanstack/react-router' {
       path: '/demo/mcp-todos'
       fullPath: '/demo/mcp-todos'
       preLoaderRoute: typeof DemoMcpTodosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/infinite-scroll': {
+      id: '/demo/infinite-scroll'
+      path: '/demo/infinite-scroll'
+      fullPath: '/demo/infinite-scroll'
+      preLoaderRoute: typeof DemoInfiniteScrollRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/ai-structured': {
@@ -403,6 +423,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemoAiChatRoute: DemoAiChatRoute,
   DemoAiImageRoute: DemoAiImageRoute,
   DemoAiStructuredRoute: DemoAiStructuredRoute,
+  DemoInfiniteScrollRoute: DemoInfiniteScrollRoute,
   DemoMcpTodosRoute: DemoMcpTodosRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
