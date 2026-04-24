@@ -1,9 +1,18 @@
 import { Link } from '@tanstack/react-router';
+import { useCallback, useRef } from 'react';
 import TanChatAIAssistant from './demo-AIAssistant.tsx';
 import ResumeAssistantButton from './ResumeAssistantButton';
 import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+
+  const closeDropdown = useCallback((e: React.MouseEvent) => {
+    if (detailsRef.current && (e.target as HTMLElement).closest('a')) {
+      detailsRef.current.open = false;
+    }
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--background)] px-4 backdrop-blur-lg">
       <nav className="page-wrap flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4">
@@ -53,51 +62,68 @@ export default function Header() {
           >
             Docs
           </a>
-          <details className="relative w-full sm:w-auto">
+          <details ref={detailsRef} className="relative w-full sm:w-auto">
             <summary className="nav-link list-none cursor-pointer">Demos</summary>
-            <div className="mt-2 min-w-56 rounded-xl border border-[var(--line)] bg-[var(--background)] p-2 shadow-lg sm:absolute sm:right-0">
-              <a
-                href="/demo/ai-chat"
+            <div
+              className="mt-2 min-w-56 rounded-xl border border-[var(--line)] bg-[var(--background)] p-2 shadow-lg sm:absolute sm:right-0"
+              onClick={closeDropdown}
+            >
+              <Link
+                to="/demo/ai-chat"
                 className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
+                activeProps={{ className: 'bg-[var(--link-bg-hover)] text-[var(--sea-ink)]' }}
               >
                 Chat
-              </a>
-              <a
-                href="/demo/ai-image"
+              </Link>
+              <Link
+                to="/demo/ai-image"
                 className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
+                activeProps={{ className: 'bg-[var(--link-bg-hover)] text-[var(--sea-ink)]' }}
               >
                 Generate Image
-              </a>
-              <a
-                href="/demo/ai-structured"
+              </Link>
+              <Link
+                to="/demo/ai-structured"
                 className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
+                activeProps={{ className: 'bg-[var(--link-bg-hover)] text-[var(--sea-ink)]' }}
               >
                 Structured Output
-              </a>
-              <a
-                href="/demo/mcp-todos"
+              </Link>
+              <Link
+                to="/demo/mcp-todos"
                 className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
+                activeProps={{ className: 'bg-[var(--link-bg-hover)] text-[var(--sea-ink)]' }}
               >
                 MCP
-              </a>
-              <a
-                href="/demo/store"
+              </Link>
+              <Link
+                to="/demo/store"
                 className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
+                activeProps={{ className: 'bg-[var(--link-bg-hover)] text-[var(--sea-ink)]' }}
               >
                 Store
-              </a>
-              <a
-                href="/demo/tanstack-query"
+              </Link>
+              <Link
+                to="/demo/tanstack-query"
                 className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
+                activeProps={{ className: 'bg-[var(--link-bg-hover)] text-[var(--sea-ink)]' }}
               >
                 TanStack Query
-              </a>
-              <a
-                href="/demo/infinite-scroll"
+              </Link>
+              <Link
+                to="/demo/infinite-scroll"
                 className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
+                activeProps={{ className: 'bg-[var(--link-bg-hover)] text-[var(--sea-ink)]' }}
               >
                 Infinite Scroll
-              </a>
+              </Link>
+              <Link
+                to="/demo/dynamic-list"
+                className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
+                activeProps={{ className: 'bg-[var(--link-bg-hover)] text-[var(--sea-ink)]' }}
+              >
+                Dynamic List
+              </Link>
             </div>
           </details>
         </div>
