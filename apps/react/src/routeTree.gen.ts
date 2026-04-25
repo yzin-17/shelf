@@ -17,6 +17,7 @@ import { Route as DemoStoreRouteImport } from './routes/demo/store'
 import { Route as DemoMcpTodosRouteImport } from './routes/demo/mcp-todos'
 import { Route as DemoInfiniteScrollRouteImport } from './routes/demo/infinite-scroll'
 import { Route as DemoDynamicListRouteImport } from './routes/demo/dynamic-list'
+import { Route as DemoContextRouteImport } from './routes/demo/context'
 import { Route as DemoAiStructuredRouteImport } from './routes/demo/ai-structured'
 import { Route as DemoAiImageRouteImport } from './routes/demo/ai-image'
 import { Route as DemoAiChatRouteImport } from './routes/demo/ai-chat'
@@ -68,6 +69,11 @@ const DemoInfiniteScrollRoute = DemoInfiniteScrollRouteImport.update({
 const DemoDynamicListRoute = DemoDynamicListRouteImport.update({
   id: '/demo/dynamic-list',
   path: '/demo/dynamic-list',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoContextRoute = DemoContextRouteImport.update({
+  id: '/demo/context',
+  path: '/demo/context',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoAiStructuredRoute = DemoAiStructuredRouteImport.update({
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/context': typeof DemoContextRoute
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/context': typeof DemoContextRoute
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/context': typeof DemoContextRoute
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
+    | '/demo/context'
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
+    | '/demo/context'
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
+    | '/demo/context'
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
@@ -275,6 +287,7 @@ export interface RootRouteChildren {
   DemoAiChatRoute: typeof DemoAiChatRoute
   DemoAiImageRoute: typeof DemoAiImageRoute
   DemoAiStructuredRoute: typeof DemoAiStructuredRoute
+  DemoContextRoute: typeof DemoContextRoute
   DemoDynamicListRoute: typeof DemoDynamicListRoute
   DemoInfiniteScrollRoute: typeof DemoInfiniteScrollRoute
   DemoMcpTodosRoute: typeof DemoMcpTodosRoute
@@ -346,6 +359,13 @@ declare module '@tanstack/react-router' {
       path: '/demo/dynamic-list'
       fullPath: '/demo/dynamic-list'
       preLoaderRoute: typeof DemoDynamicListRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/context': {
+      id: '/demo/context'
+      path: '/demo/context'
+      fullPath: '/demo/context'
+      preLoaderRoute: typeof DemoContextRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/ai-structured': {
@@ -443,6 +463,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemoAiChatRoute: DemoAiChatRoute,
   DemoAiImageRoute: DemoAiImageRoute,
   DemoAiStructuredRoute: DemoAiStructuredRoute,
+  DemoContextRoute: DemoContextRoute,
   DemoDynamicListRoute: DemoDynamicListRoute,
   DemoInfiniteScrollRoute: DemoInfiniteScrollRoute,
   DemoMcpTodosRoute: DemoMcpTodosRoute,
