@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
+import { Route as DemoReduxRouteImport } from './routes/demo/redux'
 import { Route as DemoMcpTodosRouteImport } from './routes/demo/mcp-todos'
 import { Route as DemoInfiniteScrollRouteImport } from './routes/demo/infinite-scroll'
 import { Route as DemoDynamicListRouteImport } from './routes/demo/dynamic-list'
@@ -54,6 +55,11 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
 const DemoStoreRoute = DemoStoreRouteImport.update({
   id: '/demo/store',
   path: '/demo/store',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoReduxRoute = DemoReduxRouteImport.update({
+  id: '/demo/redux',
+  path: '/demo/redux',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoMcpTodosRoute = DemoMcpTodosRouteImport.update({
@@ -149,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
@@ -196,6 +204,7 @@ export interface FileRoutesById {
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
+    | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/demo/api/mcp-todos'
@@ -244,6 +254,7 @@ export interface FileRouteTypes {
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
+    | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/demo/api/mcp-todos'
@@ -267,6 +278,7 @@ export interface FileRouteTypes {
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
+    | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/demo/api/mcp-todos'
@@ -291,6 +303,7 @@ export interface RootRouteChildren {
   DemoDynamicListRoute: typeof DemoDynamicListRoute
   DemoInfiniteScrollRoute: typeof DemoInfiniteScrollRoute
   DemoMcpTodosRoute: typeof DemoMcpTodosRoute
+  DemoReduxRoute: typeof DemoReduxRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   DemoApiMcpTodosRoute: typeof DemoApiMcpTodosRoute
@@ -338,6 +351,13 @@ declare module '@tanstack/react-router' {
       path: '/demo/store'
       fullPath: '/demo/store'
       preLoaderRoute: typeof DemoStoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/redux': {
+      id: '/demo/redux'
+      path: '/demo/redux'
+      fullPath: '/demo/redux'
+      preLoaderRoute: typeof DemoReduxRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/mcp-todos': {
@@ -467,6 +487,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemoDynamicListRoute: DemoDynamicListRoute,
   DemoInfiniteScrollRoute: DemoInfiniteScrollRoute,
   DemoMcpTodosRoute: DemoMcpTodosRoute,
+  DemoReduxRoute: DemoReduxRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   DemoApiMcpTodosRoute: DemoApiMcpTodosRoute,

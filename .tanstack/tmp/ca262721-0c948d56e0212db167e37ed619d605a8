@@ -14,9 +14,11 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
+import { Route as DemoReduxRouteImport } from './routes/demo/redux'
 import { Route as DemoMcpTodosRouteImport } from './routes/demo/mcp-todos'
 import { Route as DemoInfiniteScrollRouteImport } from './routes/demo/infinite-scroll'
 import { Route as DemoDynamicListRouteImport } from './routes/demo/dynamic-list'
+import { Route as DemoContextRouteImport } from './routes/demo/context'
 import { Route as DemoAiStructuredRouteImport } from './routes/demo/ai-structured'
 import { Route as DemoAiImageRouteImport } from './routes/demo/ai-image'
 import { Route as DemoAiChatRouteImport } from './routes/demo/ai-chat'
@@ -55,6 +57,11 @@ const DemoStoreRoute = DemoStoreRouteImport.update({
   path: '/demo/store',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoReduxRoute = DemoReduxRouteImport.update({
+  id: '/demo/redux',
+  path: '/demo/redux',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemoMcpTodosRoute = DemoMcpTodosRouteImport.update({
   id: '/demo/mcp-todos',
   path: '/demo/mcp-todos',
@@ -68,6 +75,11 @@ const DemoInfiniteScrollRoute = DemoInfiniteScrollRouteImport.update({
 const DemoDynamicListRoute = DemoDynamicListRouteImport.update({
   id: '/demo/dynamic-list',
   path: '/demo/dynamic-list',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoContextRoute = DemoContextRouteImport.update({
+  id: '/demo/context',
+  path: '/demo/context',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoAiStructuredRoute = DemoAiStructuredRouteImport.update({
@@ -139,9 +151,11 @@ export interface FileRoutesByFullPath {
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/context': typeof DemoContextRoute
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
@@ -161,9 +175,11 @@ export interface FileRoutesByTo {
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/context': typeof DemoContextRoute
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
@@ -184,9 +200,11 @@ export interface FileRoutesById {
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/context': typeof DemoContextRoute
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
@@ -208,9 +226,11 @@ export interface FileRouteTypes {
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
+    | '/demo/context'
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
+    | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/demo/api/mcp-todos'
@@ -230,9 +250,11 @@ export interface FileRouteTypes {
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
+    | '/demo/context'
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
+    | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/demo/api/mcp-todos'
@@ -252,9 +274,11 @@ export interface FileRouteTypes {
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
+    | '/demo/context'
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
+    | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/demo/api/mcp-todos'
@@ -275,9 +299,11 @@ export interface RootRouteChildren {
   DemoAiChatRoute: typeof DemoAiChatRoute
   DemoAiImageRoute: typeof DemoAiImageRoute
   DemoAiStructuredRoute: typeof DemoAiStructuredRoute
+  DemoContextRoute: typeof DemoContextRoute
   DemoDynamicListRoute: typeof DemoDynamicListRoute
   DemoInfiniteScrollRoute: typeof DemoInfiniteScrollRoute
   DemoMcpTodosRoute: typeof DemoMcpTodosRoute
+  DemoReduxRoute: typeof DemoReduxRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   DemoApiMcpTodosRoute: typeof DemoApiMcpTodosRoute
@@ -327,6 +353,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoStoreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demo/redux': {
+      id: '/demo/redux'
+      path: '/demo/redux'
+      fullPath: '/demo/redux'
+      preLoaderRoute: typeof DemoReduxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/mcp-todos': {
       id: '/demo/mcp-todos'
       path: '/demo/mcp-todos'
@@ -346,6 +379,13 @@ declare module '@tanstack/react-router' {
       path: '/demo/dynamic-list'
       fullPath: '/demo/dynamic-list'
       preLoaderRoute: typeof DemoDynamicListRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/context': {
+      id: '/demo/context'
+      path: '/demo/context'
+      fullPath: '/demo/context'
+      preLoaderRoute: typeof DemoContextRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/ai-structured': {
@@ -443,9 +483,11 @@ const rootRouteChildren: RootRouteChildren = {
   DemoAiChatRoute: DemoAiChatRoute,
   DemoAiImageRoute: DemoAiImageRoute,
   DemoAiStructuredRoute: DemoAiStructuredRoute,
+  DemoContextRoute: DemoContextRoute,
   DemoDynamicListRoute: DemoDynamicListRoute,
   DemoInfiniteScrollRoute: DemoInfiniteScrollRoute,
   DemoMcpTodosRoute: DemoMcpTodosRoute,
+  DemoReduxRoute: DemoReduxRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   DemoApiMcpTodosRoute: DemoApiMcpTodosRoute,
