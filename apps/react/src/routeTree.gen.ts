@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DemoZustandRouteImport } from './routes/demo/zustand'
+import { Route as DemoValtioRouteImport } from './routes/demo/valtio'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
 import { Route as DemoReduxRouteImport } from './routes/demo/redux'
@@ -45,6 +47,16 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoZustandRoute = DemoZustandRouteImport.update({
+  id: '/demo/zustand',
+  path: '/demo/zustand',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoValtioRoute = DemoValtioRouteImport.update({
+  id: '/demo/valtio',
+  path: '/demo/valtio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
@@ -158,6 +170,8 @@ export interface FileRoutesByFullPath {
   '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/demo/valtio': typeof DemoValtioRoute
+  '/demo/zustand': typeof DemoZustandRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
   '/demo/guitars/': typeof DemoGuitarsIndexRoute
@@ -182,6 +196,8 @@ export interface FileRoutesByTo {
   '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/demo/valtio': typeof DemoValtioRoute
+  '/demo/zustand': typeof DemoZustandRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
   '/demo/guitars': typeof DemoGuitarsIndexRoute
@@ -207,6 +223,8 @@ export interface FileRoutesById {
   '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/demo/valtio': typeof DemoValtioRoute
+  '/demo/zustand': typeof DemoZustandRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
   '/demo/guitars/': typeof DemoGuitarsIndexRoute
@@ -233,6 +251,8 @@ export interface FileRouteTypes {
     | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
+    | '/demo/valtio'
+    | '/demo/zustand'
     | '/demo/api/mcp-todos'
     | '/demo/guitars/$guitarId'
     | '/demo/guitars/'
@@ -257,6 +277,8 @@ export interface FileRouteTypes {
     | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
+    | '/demo/valtio'
+    | '/demo/zustand'
     | '/demo/api/mcp-todos'
     | '/demo/guitars/$guitarId'
     | '/demo/guitars'
@@ -281,6 +303,8 @@ export interface FileRouteTypes {
     | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
+    | '/demo/valtio'
+    | '/demo/zustand'
     | '/demo/api/mcp-todos'
     | '/demo/guitars/$guitarId'
     | '/demo/guitars/'
@@ -306,6 +330,8 @@ export interface RootRouteChildren {
   DemoReduxRoute: typeof DemoReduxRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  DemoValtioRoute: typeof DemoValtioRoute
+  DemoZustandRoute: typeof DemoZustandRoute
   DemoApiMcpTodosRoute: typeof DemoApiMcpTodosRoute
   DemoGuitarsGuitarIdRoute: typeof DemoGuitarsGuitarIdRoute
   DemoGuitarsIndexRoute: typeof DemoGuitarsIndexRoute
@@ -337,6 +363,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/zustand': {
+      id: '/demo/zustand'
+      path: '/demo/zustand'
+      fullPath: '/demo/zustand'
+      preLoaderRoute: typeof DemoZustandRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/valtio': {
+      id: '/demo/valtio'
+      path: '/demo/valtio'
+      fullPath: '/demo/valtio'
+      preLoaderRoute: typeof DemoValtioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/tanstack-query': {
@@ -490,6 +530,8 @@ const rootRouteChildren: RootRouteChildren = {
   DemoReduxRoute: DemoReduxRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  DemoValtioRoute: DemoValtioRoute,
+  DemoZustandRoute: DemoZustandRoute,
   DemoApiMcpTodosRoute: DemoApiMcpTodosRoute,
   DemoGuitarsGuitarIdRoute: DemoGuitarsGuitarIdRoute,
   DemoGuitarsIndexRoute: DemoGuitarsIndexRoute,
