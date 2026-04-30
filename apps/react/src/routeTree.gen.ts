@@ -17,6 +17,7 @@ import { Route as DemoValtioRouteImport } from './routes/demo/valtio'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
 import { Route as DemoReduxRouteImport } from './routes/demo/redux'
+import { Route as DemoMobxRouteImport } from './routes/demo/mobx'
 import { Route as DemoMcpTodosRouteImport } from './routes/demo/mcp-todos'
 import { Route as DemoInfiniteScrollRouteImport } from './routes/demo/infinite-scroll'
 import { Route as DemoDynamicListRouteImport } from './routes/demo/dynamic-list'
@@ -72,6 +73,11 @@ const DemoStoreRoute = DemoStoreRouteImport.update({
 const DemoReduxRoute = DemoReduxRouteImport.update({
   id: '/demo/redux',
   path: '/demo/redux',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoMobxRoute = DemoMobxRouteImport.update({
+  id: '/demo/mobx',
+  path: '/demo/mobx',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoMcpTodosRoute = DemoMcpTodosRouteImport.update({
@@ -167,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/mobx': typeof DemoMobxRoute
   '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/mobx': typeof DemoMobxRoute
   '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   '/demo/dynamic-list': typeof DemoDynamicListRoute
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/mobx': typeof DemoMobxRoute
   '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -248,6 +257,7 @@ export interface FileRouteTypes {
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
+    | '/demo/mobx'
     | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
+    | '/demo/mobx'
     | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/demo/dynamic-list'
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
+    | '/demo/mobx'
     | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
@@ -327,6 +339,7 @@ export interface RootRouteChildren {
   DemoDynamicListRoute: typeof DemoDynamicListRoute
   DemoInfiniteScrollRoute: typeof DemoInfiniteScrollRoute
   DemoMcpTodosRoute: typeof DemoMcpTodosRoute
+  DemoMobxRoute: typeof DemoMobxRoute
   DemoReduxRoute: typeof DemoReduxRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
@@ -398,6 +411,13 @@ declare module '@tanstack/react-router' {
       path: '/demo/redux'
       fullPath: '/demo/redux'
       preLoaderRoute: typeof DemoReduxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/mobx': {
+      id: '/demo/mobx'
+      path: '/demo/mobx'
+      fullPath: '/demo/mobx'
+      preLoaderRoute: typeof DemoMobxRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/mcp-todos': {
@@ -527,6 +547,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemoDynamicListRoute: DemoDynamicListRoute,
   DemoInfiniteScrollRoute: DemoInfiniteScrollRoute,
   DemoMcpTodosRoute: DemoMcpTodosRoute,
+  DemoMobxRoute: DemoMobxRoute,
   DemoReduxRoute: DemoReduxRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
