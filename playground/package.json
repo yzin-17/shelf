@@ -1,0 +1,39 @@
+{
+  "name": "vite-test",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:vue": "pnpm --filter @vite-test/vue dev",
+    "dev:react": "pnpm --filter @vite-test/react dev",
+    "dev:webpack": "pnpm --filter @vite-test/webpack dev",
+    "build": "pnpm -r build",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "preview": "pnpm -r preview"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@content-collections/vite": "^0.3.0",
+    "@rolldown/plugin-babel": "^0.2.2",
+    "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/devtools-vite": "latest",
+    "@tanstack/react-start": "latest",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^24.12.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "@vue/tsconfig": "^0.9.1",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "code-inspector-plugin": "^1.5.1",
+    "globals": "^17.4.0",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
+    "oxlint-tsgolint": "^0.21.1",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8",
+    "vue-tsc": "^3.2.6"
+  }
+}

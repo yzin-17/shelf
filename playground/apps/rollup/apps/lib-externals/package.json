@@ -1,0 +1,13 @@
+{
+  "name": "@vite-test/rollup-lib-externals",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rollup subproject",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "dependencies": {
+    "@vite-test/rollup-lib": "workspace:*"
+  }
+}
