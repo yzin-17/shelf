@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router';
 
-import { addTodo, getTodos, subscribeToTodos } from "#/mcp-todos";
+import { addTodo, getTodos, subscribeToTodos } from '#/mcp-todos';
 
-export const Route = createFileRoute("/demo/api/mcp-todos")({
+export const Route = createFileRoute('/demo/api/mcp-todos')({
   server: {
     handlers: {
       GET: () => {
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/demo/api/mcp-todos")({
           },
         });
         return new Response(stream, {
-          headers: { "Content-Type": "text/event-stream" },
+          headers: { 'Content-Type': 'text/event-stream' },
         });
       },
       POST: async ({ request }) => {

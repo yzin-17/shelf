@@ -1,19 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { generateSpeech } from '@tanstack/ai'
-import { openaiSpeech } from '@tanstack/ai-openai'
+import { createFileRoute } from '@tanstack/react-router';
+import { generateSpeech } from '@tanstack/ai';
+import { openaiSpeech } from '@tanstack/ai-openai';
 
 export const Route = createFileRoute('/demo/api/ai/tts')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const body = await request.json()
-        const {
-          text,
-          voice = 'alloy',
-          model = 'tts-1',
-          format = 'mp3',
-          speed = 1.0,
-        } = body
+        const body = await request.json();
+        const { text, voice = 'alloy', model = 'tts-1', format = 'mp3', speed = 1.0 } = body;
 
         if (!text || text.trim().length === 0) {
           return new Response(
@@ -24,7 +18,7 @@ export const Route = createFileRoute('/demo/api/ai/tts')({
               status: 400,
               headers: { 'Content-Type': 'application/json' },
             },
-          )
+          );
         }
 
         if (!process.env.OPENAI_API_KEY) {
@@ -36,11 +30,11 @@ export const Route = createFileRoute('/demo/api/ai/tts')({
               status: 500,
               headers: { 'Content-Type': 'application/json' },
             },
-          )
+          );
         }
 
         try {
-          const adapter = openaiSpeech(model)
+          const adapter = openaiSpeech(model);
 
           const result = await generateSpeech({
             adapter,
@@ -48,7 +42,7 @@ export const Route = createFileRoute('/demo/api/ai/tts')({
             voice,
             format,
             speed,
-          })
+          });
 
           return new Response(
             JSON.stringify({
@@ -63,7 +57,7 @@ export const Route = createFileRoute('/demo/api/ai/tts')({
               status: 200,
               headers: { 'Content-Type': 'application/json' },
             },
-          )
+          );
         } catch (error: any) {
           return new Response(
             JSON.stringify({
@@ -73,9 +67,9 @@ export const Route = createFileRoute('/demo/api/ai/tts')({
               status: 500,
               headers: { 'Content-Type': 'application/json' },
             },
-          )
+          );
         }
       },
     },
   },
-})
+});

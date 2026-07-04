@@ -11,12 +11,5 @@
   "routerOnly": false,
   "version": 1,
   "framework": "react",
-  "chosenAddOns": [
-    "ai",
-    "compiler",
-    "mcp",
-    "store",
-    "tanstack-query",
-    "resume"
-  ]
+  "chosenAddOns": ["ai", "compiler", "mcp", "store", "tanstack-query", "resume"]
 }

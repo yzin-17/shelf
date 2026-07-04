@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { chat } from '@tanstack/ai'
-import { openaiText } from '@tanstack/ai-openai'
-import { z } from 'zod'
+import { createFileRoute } from '@tanstack/react-router';
+import { chat } from '@tanstack/ai';
+import { openaiText } from '@tanstack/ai-openai';
+import { z } from 'zod';
 
 // Schema for structured recipe output
 const RecipeSchema = z.object({
@@ -20,9 +20,7 @@ const RecipeSchema = z.object({
       }),
     )
     .describe('List of ingredients'),
-  instructions: z
-    .array(z.string())
-    .describe('Step-by-step cooking instructions'),
+  instructions: z.array(z.string()).describe('Step-by-step cooking instructions'),
   tips: z.array(z.string()).optional().describe('Optional cooking tips'),
   nutritionPerServing: z
     .object({
@@ -33,16 +31,16 @@ const RecipeSchema = z.object({
     })
     .optional()
     .describe('Nutritional information per serving'),
-})
+});
 
-export type Recipe = z.infer<typeof RecipeSchema>
+export type Recipe = z.infer<typeof RecipeSchema>;
 
 export const Route = createFileRoute('/demo/api/ai/structured')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const body = await request.json()
-        const { recipeName, mode = 'structured' } = body
+        const body = await request.json();
+        const { recipeName, mode = 'structured' } = body;
 
         if (!recipeName || recipeName.trim().length === 0) {
           return new Response(
@@ -53,7 +51,7 @@ export const Route = createFileRoute('/demo/api/ai/structured')({
               status: 400,
               headers: { 'Content-Type': 'application/json' },
             },
-          )
+          );
         }
 
         try {
@@ -68,7 +66,7 @@ export const Route = createFileRoute('/demo/api/ai/structured')({
                 },
               ],
               outputSchema: RecipeSchema,
-            } as any)
+            } as any);
 
             return new Response(
               JSON.stringify({
@@ -81,7 +79,7 @@ export const Route = createFileRoute('/demo/api/ai/structured')({
                 status: 200,
                 headers: { 'Content-Type': 'application/json' },
               },
-            )
+            );
           } else {
             // One-shot markdown mode - returns text
             const markdown = await chat({
@@ -104,7 +102,7 @@ Format the recipe in beautiful markdown with:
 Make it detailed and easy to follow.`,
                 },
               ],
-            } as any)
+            } as any);
 
             return new Response(
               JSON.stringify({
@@ -117,7 +115,7 @@ Make it detailed and easy to follow.`,
                 status: 200,
                 headers: { 'Content-Type': 'application/json' },
               },
-            )
+            );
           }
         } catch (error: any) {
           return new Response(
@@ -128,9 +126,9 @@ Make it detailed and easy to follow.`,
               status: 500,
               headers: { 'Content-Type': 'application/json' },
             },
-          )
+          );
         }
       },
     },
   },
-})
+});

@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import TanChatAIAssistant from './demo-AIAssistant.tsx';
 import ResumeAssistantButton from './ResumeAssistantButton';
 import ThemeToggle from './ThemeToggle';
@@ -11,6 +11,33 @@ export default function Header() {
     if (detailsRef.current && (e.target as HTMLElement).closest('a')) {
       detailsRef.current.open = false;
     }
+  }, []);
+
+  useEffect(() => {
+    function handleOutside(e: MouseEvent) {
+      if (!detailsRef.current) return;
+      if (detailsRef.current.open && !detailsRef.current.contains(e.target as Node)) {
+        detailsRef.current.open = false;
+      }
+    }
+
+    function handleEsc(e: KeyboardEvent) {
+      if (e.key === 'Escape' && detailsRef.current?.open) {
+        detailsRef.current.open = false;
+      }
+    }
+
+    if (typeof document !== 'undefined') {
+      document.addEventListener('mousedown', handleOutside);
+      document.addEventListener('keydown', handleEsc);
+    }
+
+    return () => {
+      if (typeof document !== 'undefined') {
+        document.removeEventListener('mousedown', handleOutside);
+        document.removeEventListener('keydown', handleEsc);
+      }
+    };
   }, []);
 
   return (
@@ -54,14 +81,6 @@ export default function Header() {
           <Link to="/about" className="nav-link" activeProps={{ className: 'nav-link is-active' }}>
             About
           </Link>
-          <a
-            href="https://tanstack.com/start/latest/docs/framework/react/overview"
-            className="nav-link"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Docs
-          </a>
           <details ref={detailsRef} className="relative w-full sm:w-auto">
             <summary className="nav-link list-none cursor-pointer">Demos</summary>
             <div
@@ -158,6 +177,13 @@ export default function Header() {
                 activeProps={{ className: 'bg-[var(--link-bg-hover)] text-[var(--sea-ink)]' }}
               >
                 mobx
+              </Link>
+              <Link
+                to="/demo/mock"
+                className="block rounded-lg px-3 py-2 text-sm text-[var(--sea-ink-soft)] no-underline transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
+                activeProps={{ className: 'bg-[var(--link-bg-hover)] text-[var(--sea-ink)]' }}
+              >
+                mock
               </Link>
             </div>
           </details>

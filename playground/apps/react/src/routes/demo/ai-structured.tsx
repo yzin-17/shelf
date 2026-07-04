@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
-import { ChefHat, Clock, Users, Gauge } from 'lucide-react'
-import { Streamdown } from 'streamdown'
+import { useState } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
+import { ChefHat, Clock, Users, Gauge } from 'lucide-react';
+import { Streamdown } from 'streamdown';
 
-import type { Recipe } from './api.ai.structured'
+import type { Recipe } from './api.ai.structured';
 
-type Mode = 'structured' | 'oneshot'
+type Mode = 'structured' | 'oneshot';
 
 const SAMPLE_RECIPES = [
   'Homemade Margherita Pizza',
@@ -16,14 +16,14 @@ const SAMPLE_RECIPES = [
   'Fresh Spring Rolls with Peanut Sauce',
   'Creamy Mushroom Risotto',
   'Authentic Pad Thai',
-]
+];
 
 function RecipeCard({ recipe }: { recipe: Recipe }) {
   const difficultyColors = {
     easy: 'bg-green-500/20 text-green-400',
     medium: 'bg-yellow-500/20 text-yellow-400',
     hard: 'bg-red-500/20 text-red-400',
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -66,9 +66,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
               <span className="text-orange-400">•</span>
               <span>
                 <span className="font-medium">{ing.amount}</span> {ing.item}
-                {ing.notes && (
-                  <span className="text-gray-500 text-sm"> ({ing.notes})</span>
-                )}
+                {ing.notes && <span className="text-gray-500 text-sm"> ({ing.notes})</span>}
               </span>
             </li>
           ))}
@@ -108,9 +106,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
       {/* Nutrition */}
       {recipe.nutritionPerServing && (
         <div>
-          <h4 className="text-lg font-semibold text-white mb-3">
-            Nutrition (per serving)
-          </h4>
+          <h4 className="text-lg font-semibold text-white mb-3">Nutrition (per serving)</h4>
           <div className="flex flex-wrap gap-4 text-sm">
             {recipe.nutritionPerServing.calories && (
               <span className="px-3 py-1 bg-gray-700 rounded-full text-gray-300">
@@ -136,74 +132,68 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 function StructuredPage() {
-  const [recipeName, setRecipeName] = useState('')
+  const [recipeName, setRecipeName] = useState('');
   const [result, setResult] = useState<{
-    mode: Mode
-    recipe?: Recipe
-    markdown?: string
-    provider: string
-    model: string
-  } | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+    mode: Mode;
+    recipe?: Recipe;
+    markdown?: string;
+    provider: string;
+    model: string;
+  } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async (mode: Mode) => {
-    if (!recipeName.trim()) return
+    if (!recipeName.trim()) return;
 
-    setIsLoading(true)
-    setError(null)
-    setResult(null)
+    setIsLoading(true);
+    setError(null);
+    setResult(null);
 
     try {
       const response = await fetch('/demo/api/ai/structured', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ recipeName, mode }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to generate recipe')
+        throw new Error(data.error || 'Failed to generate recipe');
       }
 
-      setResult(data)
+      setResult(data);
     } catch (err: any) {
-      setError(err.message)
+      setError(err.message);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
-  const canExecute = !!(!isLoading && recipeName.trim() && !error)
+  const canExecute = !!(!isLoading && recipeName.trim() && !error);
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-gray-900 p-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-3 mb-6">
           <ChefHat className="w-8 h-8 text-orange-500" />
-          <h1 className="text-2xl font-bold text-white">
-            One-Shot & Structured Output
-          </h1>
+          <h1 className="text-2xl font-bold text-white">One-Shot & Structured Output</h1>
         </div>
 
         <p className="text-gray-400 mb-6">
-          Compare two output modes:{' '}
-          <strong className="text-orange-400">One-Shot</strong> returns freeform
-          markdown, while{' '}
-          <strong className="text-orange-400">Structured</strong> returns
+          Compare two output modes: <strong className="text-orange-400">One-Shot</strong> returns
+          freeform markdown, while <strong className="text-orange-400">Structured</strong> returns
           validated JSON conforming to a Zod schema.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Recipe Name
-            </label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Recipe Name</label>
             <input
               type="text"
               value={recipeName}
@@ -214,9 +204,7 @@ function StructuredPage() {
             />
 
             <div className="mt-2">
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Quick Picks
-              </label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Quick Picks</label>
               <div className="flex flex-wrap gap-2">
                 {SAMPLE_RECIPES.map((name) => (
                   <button
@@ -259,9 +247,7 @@ function StructuredPage() {
         {/* Output Panel */}
         <div className="mt-5 lg:col-span-2 bg-gray-800 rounded-lg p-6 border border-orange-500/20">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-white">
-              Generated Recipe
-            </h2>
+            <h2 className="text-lg font-semibold text-white">Generated Recipe</h2>
             {result && (
               <span
                 className={`px-2 py-1 rounded text-xs font-medium ${
@@ -294,17 +280,15 @@ function StructuredPage() {
           ) : !error && !isLoading ? (
             <div className="flex flex-col items-center justify-center h-64 text-gray-500">
               <ChefHat className="w-16 h-16 mb-4 opacity-50" />
-              <p>
-                Enter a recipe name and click "Generate Recipe" to get started.
-              </p>
+              <p>Enter a recipe name and click "Generate Recipe" to get started.</p>
             </div>
           ) : null}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export const Route = createFileRoute('/demo/ai-structured')({
   component: StructuredPage,
-})
+});

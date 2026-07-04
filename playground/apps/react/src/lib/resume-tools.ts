@@ -1,7 +1,7 @@
-import { toolDefinition } from '@tanstack/ai'
-import { z } from 'zod'
+import { toolDefinition } from '@tanstack/ai';
+import { z } from 'zod';
 
-import { allJobs, allEducations } from 'content-collections'
+import { allJobs, allEducations } from 'content-collections';
 
 // Tool definition for getting jobs by skill
 export const getJobsBySkillToolDef = toolDefinition({
@@ -27,14 +27,14 @@ export const getJobsBySkillToolDef = toolDefinition({
       content: z.string(),
     }),
   ),
-})
+});
 
 // Server implementation
 export const getJobsBySkill = getJobsBySkillToolDef.server(({ skill }) => {
   return allJobs.filter((job) =>
     job.tags.some((tag) => tag.toLowerCase().includes(skill.toLowerCase())),
-  )
-})
+  );
+});
 
 // Tool definition for getting all jobs
 export const getAllJobsToolDef = toolDefinition({
@@ -54,7 +54,7 @@ export const getAllJobsToolDef = toolDefinition({
       content: z.string(),
     }),
   ),
-})
+});
 
 // Server implementation
 export const getAllJobs = getAllJobsToolDef.server(() => {
@@ -67,8 +67,8 @@ export const getAllJobs = getAllJobsToolDef.server(() => {
     summary: job.summary,
     tags: job.tags,
     content: job.content,
-  }))
-})
+  }));
+});
 
 // Tool definition for getting all education
 export const getAllEducationToolDef = toolDefinition({
@@ -86,7 +86,7 @@ export const getAllEducationToolDef = toolDefinition({
       content: z.string(),
     }),
   ),
-})
+});
 
 // Server implementation
 export const getAllEducation = getAllEducationToolDef.server(() => {
@@ -97,8 +97,8 @@ export const getAllEducation = getAllEducationToolDef.server(() => {
     endDate: education.endDate,
     tags: education.tags,
     content: education.content,
-  }))
-})
+  }));
+});
 
 // Tool definition for searching experience
 export const searchExperienceToolDef = toolDefinition({
@@ -106,11 +106,7 @@ export const searchExperienceToolDef = toolDefinition({
   description:
     'Search for jobs by keywords in the job title, company name, summary, or content. Use this to find specific types of experience or roles.',
   inputSchema: z.object({
-    query: z
-      .string()
-      .describe(
-        'The search query (e.g., "senior", "lead", "frontend", "startup")',
-      ),
+    query: z.string().describe('The search query (e.g., "senior", "lead", "frontend", "startup")'),
   }),
   outputSchema: z.array(
     z.object({
@@ -121,35 +117,33 @@ export const searchExperienceToolDef = toolDefinition({
       endDate: z.string().optional(),
       summary: z.string(),
       tags: z.array(z.string()),
-      matchedIn: z
-        .array(z.string())
-        .describe('Which fields matched the search'),
+      matchedIn: z.array(z.string()).describe('Which fields matched the search'),
     }),
   ),
-})
+});
 
 // Server implementation
 export const searchExperience = searchExperienceToolDef.server(({ query }) => {
-  const lowerQuery = query.toLowerCase()
+  const lowerQuery = query.toLowerCase();
 
   return allJobs
     .map((job) => {
-      const matchedIn: string[] = []
+      const matchedIn: string[] = [];
 
       if (job.jobTitle.toLowerCase().includes(lowerQuery)) {
-        matchedIn.push('job title')
+        matchedIn.push('job title');
       }
       if (job.company.toLowerCase().includes(lowerQuery)) {
-        matchedIn.push('company')
+        matchedIn.push('company');
       }
       if (job.summary.toLowerCase().includes(lowerQuery)) {
-        matchedIn.push('summary')
+        matchedIn.push('summary');
       }
       if (job.content.toLowerCase().includes(lowerQuery)) {
-        matchedIn.push('description')
+        matchedIn.push('description');
       }
 
-      return { job, matchedIn }
+      return { job, matchedIn };
     })
     .filter(({ matchedIn }) => matchedIn.length > 0)
     .map(({ job, matchedIn }) => ({
@@ -161,5 +155,5 @@ export const searchExperience = searchExperienceToolDef.server(({ query }) => {
       summary: job.summary,
       tags: job.tags,
       matchedIn,
-    }))
-})
+    }));
+});

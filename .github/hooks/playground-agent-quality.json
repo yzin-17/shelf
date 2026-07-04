@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "./scripts/agent-quality-hook.sh",
+        "cwd": "playground",
+        "timeout": 120
+      }
+    ]
+  }
+}

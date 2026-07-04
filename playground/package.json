@@ -8,8 +8,13 @@
     "dev:react": "pnpm --filter @vite-test/react dev",
     "dev:webpack": "pnpm --filter @vite-test/webpack dev",
     "build": "pnpm -r build",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
+    "typecheck": "tsc -b --pretty false",
+    "agent:fix": "pnpm run format && pnpm run lint:fix",
+    "agent:verify": "pnpm run typecheck && pnpm run lint",
     "preview": "pnpm -r preview"
   },
   "devDependencies": {
@@ -29,6 +34,7 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "code-inspector-plugin": "^1.5.1",
     "globals": "^17.4.0",
+    "msw": "^2.14.6",
     "oxfmt": "^0.45.0",
     "oxlint": "^1.60.0",
     "oxlint-tsgolint": "^0.21.1",

@@ -1,15 +1,15 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { createFileRoute } from '@tanstack/react-router'
-import z from 'zod'
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { createFileRoute } from '@tanstack/react-router';
+import z from 'zod';
 
-import { handleMcpRequest } from '#/utils/mcp-handler'
+import { handleMcpRequest } from '#/utils/mcp-handler';
 
-import { addTodo } from '#/mcp-todos'
+import { addTodo } from '#/mcp-todos';
 
 const server = new McpServer({
   name: 'start-server',
   version: '1.0.0',
-})
+});
 
 server.registerTool(
   'addTodo',
@@ -23,7 +23,7 @@ server.registerTool(
   ({ title }) => ({
     content: [{ type: 'text', text: String(addTodo(title)) }],
   }),
-)
+);
 
 // server.registerResource(
 //   "counter-value",
@@ -50,4 +50,4 @@ export const Route = createFileRoute('/mcp')({
       POST: async ({ request }) => handleMcpRequest(request, server),
     },
   },
-})
+});

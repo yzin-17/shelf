@@ -5,10 +5,12 @@ import { Store } from '@tanstack/store';
 import { Send, X, ChevronRight, BotIcon } from 'lucide-react';
 import { Streamdown } from 'streamdown';
 
-import { useGuitarRecommendationChat } from '#/lib/demo-ai-hook';
-import type { ChatMessages } from '#/lib/demo-ai-hook';
-
-import GuitarRecommendation from './demo-GuitarRecommendation';
+// Removed guitar-specific imports
+type ChatMessages = Array<{
+  id: string;
+  role: 'assistant' | 'user';
+  parts: Array<{ type: 'text'; content?: string }>;
+}>;
 
 export const showAIAssistant = new Store(false);
 
@@ -59,13 +61,6 @@ function Messages({ messages }: { messages: ChatMessages }) {
                 </div>
               );
             }
-            if (part.type === 'tool-call' && part.name === 'recommendGuitar' && part.output) {
-              return (
-                <div key={part.id} className="max-w-[80%] mx-auto">
-                  <GuitarRecommendation id={String(part.output?.id)} />
-                </div>
-              );
-            }
           })}
         </div>
       ))}
@@ -75,7 +70,21 @@ function Messages({ messages }: { messages: ChatMessages }) {
 
 export default function AIAssistant() {
   const isOpen = useStore(showAIAssistant, (state) => state);
-  const { messages, sendMessage } = useGuitarRecommendationChat();
+  const [messages, setMessages] = useState<ChatMessages>([]);
+
+  const sendMessage = (text: string) => {
+    const userMsg = {
+      id: String(Date.now()),
+      role: 'user',
+      parts: [{ type: 'text', content: text }],
+    };
+    const assistantMsg = {
+      id: String(Date.now() + 1),
+      role: 'assistant',
+      parts: [{ type: 'text', content: `I heard: ${text}` }],
+    };
+    setMessages((s) => [...s, userMsg as any, assistantMsg as any]);
+  };
   const [input, setInput] = useState('');
 
   return (

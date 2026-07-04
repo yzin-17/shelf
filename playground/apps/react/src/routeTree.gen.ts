@@ -17,6 +17,7 @@ import { Route as DemoValtioRouteImport } from './routes/demo/valtio'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
 import { Route as DemoReduxRouteImport } from './routes/demo/redux'
+import { Route as DemoMockRouteImport } from './routes/demo/mock'
 import { Route as DemoMobxRouteImport } from './routes/demo/mobx'
 import { Route as DemoMcpTodosRouteImport } from './routes/demo/mcp-todos'
 import { Route as DemoInfiniteScrollRouteImport } from './routes/demo/infinite-scroll'
@@ -26,14 +27,11 @@ import { Route as DemoAiStructuredRouteImport } from './routes/demo/ai-structure
 import { Route as DemoAiImageRouteImport } from './routes/demo/ai-image'
 import { Route as DemoAiChatRouteImport } from './routes/demo/ai-chat'
 import { Route as ApiResumeChatRouteImport } from './routes/api.resume-chat'
-import { Route as DemoGuitarsIndexRouteImport } from './routes/demo/guitars/index'
-import { Route as DemoGuitarsGuitarIdRouteImport } from './routes/demo/guitars/$guitarId'
 import { Route as DemoApiMcpTodosRouteImport } from './routes/demo/api.mcp-todos'
 import { Route as DemoApiAiTtsRouteImport } from './routes/demo/api.ai.tts'
 import { Route as DemoApiAiTranscriptionRouteImport } from './routes/demo/api.ai.transcription'
 import { Route as DemoApiAiStructuredRouteImport } from './routes/demo/api.ai.structured'
 import { Route as DemoApiAiImageRouteImport } from './routes/demo/api.ai.image'
-import { Route as DemoApiAiChatRouteImport } from './routes/demo/api.ai.chat'
 
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
@@ -73,6 +71,11 @@ const DemoStoreRoute = DemoStoreRouteImport.update({
 const DemoReduxRoute = DemoReduxRouteImport.update({
   id: '/demo/redux',
   path: '/demo/redux',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoMockRoute = DemoMockRouteImport.update({
+  id: '/demo/mock',
+  path: '/demo/mock',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoMobxRoute = DemoMobxRouteImport.update({
@@ -120,16 +123,6 @@ const ApiResumeChatRoute = ApiResumeChatRouteImport.update({
   path: '/api/resume-chat',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoGuitarsIndexRoute = DemoGuitarsIndexRouteImport.update({
-  id: '/demo/guitars/',
-  path: '/demo/guitars/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoGuitarsGuitarIdRoute = DemoGuitarsGuitarIdRouteImport.update({
-  id: '/demo/guitars/$guitarId',
-  path: '/demo/guitars/$guitarId',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DemoApiMcpTodosRoute = DemoApiMcpTodosRouteImport.update({
   id: '/demo/api/mcp-todos',
   path: '/demo/api/mcp-todos',
@@ -155,11 +148,6 @@ const DemoApiAiImageRoute = DemoApiAiImageRouteImport.update({
   path: '/demo/api/ai/image',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoApiAiChatRoute = DemoApiAiChatRouteImport.update({
-  id: '/demo/api/ai/chat',
-  path: '/demo/api/ai/chat',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -174,15 +162,13 @@ export interface FileRoutesByFullPath {
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/mobx': typeof DemoMobxRoute
+  '/demo/mock': typeof DemoMockRoute
   '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/valtio': typeof DemoValtioRoute
   '/demo/zustand': typeof DemoZustandRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
-  '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
-  '/demo/guitars/': typeof DemoGuitarsIndexRoute
-  '/demo/api/ai/chat': typeof DemoApiAiChatRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
   '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
   '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute
@@ -201,15 +187,13 @@ export interface FileRoutesByTo {
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/mobx': typeof DemoMobxRoute
+  '/demo/mock': typeof DemoMockRoute
   '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/valtio': typeof DemoValtioRoute
   '/demo/zustand': typeof DemoZustandRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
-  '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
-  '/demo/guitars': typeof DemoGuitarsIndexRoute
-  '/demo/api/ai/chat': typeof DemoApiAiChatRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
   '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
   '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute
@@ -229,15 +213,13 @@ export interface FileRoutesById {
   '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/mobx': typeof DemoMobxRoute
+  '/demo/mock': typeof DemoMockRoute
   '/demo/redux': typeof DemoReduxRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/valtio': typeof DemoValtioRoute
   '/demo/zustand': typeof DemoZustandRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
-  '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
-  '/demo/guitars/': typeof DemoGuitarsIndexRoute
-  '/demo/api/ai/chat': typeof DemoApiAiChatRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
   '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
   '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute
@@ -258,15 +240,13 @@ export interface FileRouteTypes {
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
     | '/demo/mobx'
+    | '/demo/mock'
     | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/demo/valtio'
     | '/demo/zustand'
     | '/demo/api/mcp-todos'
-    | '/demo/guitars/$guitarId'
-    | '/demo/guitars/'
-    | '/demo/api/ai/chat'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
     | '/demo/api/ai/transcription'
@@ -285,15 +265,13 @@ export interface FileRouteTypes {
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
     | '/demo/mobx'
+    | '/demo/mock'
     | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/demo/valtio'
     | '/demo/zustand'
     | '/demo/api/mcp-todos'
-    | '/demo/guitars/$guitarId'
-    | '/demo/guitars'
-    | '/demo/api/ai/chat'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
     | '/demo/api/ai/transcription'
@@ -312,15 +290,13 @@ export interface FileRouteTypes {
     | '/demo/infinite-scroll'
     | '/demo/mcp-todos'
     | '/demo/mobx'
+    | '/demo/mock'
     | '/demo/redux'
     | '/demo/store'
     | '/demo/tanstack-query'
     | '/demo/valtio'
     | '/demo/zustand'
     | '/demo/api/mcp-todos'
-    | '/demo/guitars/$guitarId'
-    | '/demo/guitars/'
-    | '/demo/api/ai/chat'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
     | '/demo/api/ai/transcription'
@@ -340,15 +316,13 @@ export interface RootRouteChildren {
   DemoInfiniteScrollRoute: typeof DemoInfiniteScrollRoute
   DemoMcpTodosRoute: typeof DemoMcpTodosRoute
   DemoMobxRoute: typeof DemoMobxRoute
+  DemoMockRoute: typeof DemoMockRoute
   DemoReduxRoute: typeof DemoReduxRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   DemoValtioRoute: typeof DemoValtioRoute
   DemoZustandRoute: typeof DemoZustandRoute
   DemoApiMcpTodosRoute: typeof DemoApiMcpTodosRoute
-  DemoGuitarsGuitarIdRoute: typeof DemoGuitarsGuitarIdRoute
-  DemoGuitarsIndexRoute: typeof DemoGuitarsIndexRoute
-  DemoApiAiChatRoute: typeof DemoApiAiChatRoute
   DemoApiAiImageRoute: typeof DemoApiAiImageRoute
   DemoApiAiStructuredRoute: typeof DemoApiAiStructuredRoute
   DemoApiAiTranscriptionRoute: typeof DemoApiAiTranscriptionRoute
@@ -411,6 +385,13 @@ declare module '@tanstack/react-router' {
       path: '/demo/redux'
       fullPath: '/demo/redux'
       preLoaderRoute: typeof DemoReduxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/mock': {
+      id: '/demo/mock'
+      path: '/demo/mock'
+      fullPath: '/demo/mock'
+      preLoaderRoute: typeof DemoMockRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/mobx': {
@@ -476,20 +457,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiResumeChatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/guitars/': {
-      id: '/demo/guitars/'
-      path: '/demo/guitars'
-      fullPath: '/demo/guitars/'
-      preLoaderRoute: typeof DemoGuitarsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/guitars/$guitarId': {
-      id: '/demo/guitars/$guitarId'
-      path: '/demo/guitars/$guitarId'
-      fullPath: '/demo/guitars/$guitarId'
-      preLoaderRoute: typeof DemoGuitarsGuitarIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/demo/api/mcp-todos': {
       id: '/demo/api/mcp-todos'
       path: '/demo/api/mcp-todos'
@@ -525,13 +492,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoApiAiImageRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/api/ai/chat': {
-      id: '/demo/api/ai/chat'
-      path: '/demo/api/ai/chat'
-      fullPath: '/demo/api/ai/chat'
-      preLoaderRoute: typeof DemoApiAiChatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -548,15 +508,13 @@ const rootRouteChildren: RootRouteChildren = {
   DemoInfiniteScrollRoute: DemoInfiniteScrollRoute,
   DemoMcpTodosRoute: DemoMcpTodosRoute,
   DemoMobxRoute: DemoMobxRoute,
+  DemoMockRoute: DemoMockRoute,
   DemoReduxRoute: DemoReduxRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   DemoValtioRoute: DemoValtioRoute,
   DemoZustandRoute: DemoZustandRoute,
   DemoApiMcpTodosRoute: DemoApiMcpTodosRoute,
-  DemoGuitarsGuitarIdRoute: DemoGuitarsGuitarIdRoute,
-  DemoGuitarsIndexRoute: DemoGuitarsIndexRoute,
-  DemoApiAiChatRoute: DemoApiAiChatRoute,
   DemoApiAiImageRoute: DemoApiAiImageRoute,
   DemoApiAiStructuredRoute: DemoApiAiStructuredRoute,
   DemoApiAiTranscriptionRoute: DemoApiAiTranscriptionRoute,

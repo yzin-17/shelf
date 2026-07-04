@@ -1,5 +1,5 @@
-import { Briefcase, ChevronRight } from 'lucide-react'
-import { showResumeAssistant } from './ResumeAssistant'
+import { Briefcase, ChevronRight } from 'lucide-react';
+import { showResumeAssistant } from './ResumeAssistant';
 
 export default function RemyButton() {
   return (
@@ -16,5 +16,5 @@ export default function RemyButton() {
         <ChevronRight className="w-4 h-4" />
       </button>
     </div>
-  )
+  );
 }

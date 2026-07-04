@@ -1,14 +1,14 @@
-import fs from "node:fs";
+import fs from 'node:fs';
 
-const todosPath = "./mcp-todos.json";
+const todosPath = './mcp-todos.json';
 
 // In-memory todos storage
 const todos = fs.existsSync(todosPath)
-  ? JSON.parse(fs.readFileSync(todosPath, "utf8"))
+  ? JSON.parse(fs.readFileSync(todosPath, 'utf8'))
   : [
       {
         id: 1,
-        title: "Buy groceries",
+        title: 'Buy groceries',
       },
     ];
 
