@@ -1,0 +1,17 @@
+{
+  "name": "@vite-test/rollup-lib",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rollup subproject",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/lib.es.js",
+      "require": "./dist/lib.cjs.js",
+      "umd": "./dist/lib.umd.js"
+    }
+  },
+  "scripts": {
+    "build": "rollup -c"
+  }
+}
