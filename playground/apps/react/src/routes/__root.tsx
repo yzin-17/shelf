@@ -9,6 +9,7 @@ import StoreDevtools from '../lib/demo-store-devtools';
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools';
 
 import appCss from '../styles.css?url';
+import { MockServiceWorker } from '../mock/MockServiceWorker';
 
 import type { QueryClient } from '@tanstack/react-query';
 
@@ -50,6 +51,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
+        <MockServiceWorker />
         <Header />
         {children}
         <Footer />
