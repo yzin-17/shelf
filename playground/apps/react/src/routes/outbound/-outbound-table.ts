@@ -93,7 +93,11 @@ export function validateOutboundRows(
 
     const warehouse = warehousesBySku[skuId]?.find((option) => option.warehouseId === warehouseId);
     if (warehouse && row.outboundQty > warehouse.availableQty) {
-      appendError(rowErrors, row.id, `Outbound quantity exceeds available quantity ${warehouse.availableQty}`);
+      appendError(
+        rowErrors,
+        row.id,
+        `Outbound quantity exceeds available quantity ${warehouse.availableQty}`,
+      );
     }
   }
 

@@ -164,7 +164,9 @@ function OutboundPage() {
     try {
       const payload = buildCreateOutboundOrderRequest([row], action, remark);
       const response = await createOutboundOrder(payload);
-      setSubmitMessage(`${response.orderNo} ${response.status === 'DRAFT' ? 'saved' : 'submitted'}.`);
+      setSubmitMessage(
+        `${response.orderNo} ${response.status === 'DRAFT' ? 'saved' : 'submitted'}.`,
+      );
     } catch (error) {
       setSubmitMessage(error instanceof Error ? error.message : 'Submit failed');
     } finally {
@@ -186,7 +188,9 @@ function OutboundPage() {
       render: (skuId: string) => (
         <Space direction="vertical" size={2}>
           <Typography.Text strong>{skuId}</Typography.Text>
-          {loadErrors[skuId] ? <Typography.Text type="danger">{loadErrors[skuId]}</Typography.Text> : null}
+          {loadErrors[skuId] ? (
+            <Typography.Text type="danger">{loadErrors[skuId]}</Typography.Text>
+          ) : null}
         </Space>
       ),
     },
@@ -210,7 +214,9 @@ function OutboundPage() {
       render: (_value, row) => {
         const skuId = row.skuId.trim();
         const warehouses = warehousesBySku[skuId] ?? [];
-        const selectedWarehouse = warehouses.find((warehouse) => warehouse.warehouseId === row.warehouseId);
+        const selectedWarehouse = warehouses.find(
+          (warehouse) => warehouse.warehouseId === row.warehouseId,
+        );
 
         return (
           <Space direction="vertical" size={4} className="w-full">
@@ -232,7 +238,9 @@ function OutboundPage() {
               </Button>
             </Space.Compact>
             {selectedWarehouse ? (
-              <Typography.Text type="secondary">可用数量：{selectedWarehouse.availableQty}</Typography.Text>
+              <Typography.Text type="secondary">
+                可用数量：{selectedWarehouse.availableQty}
+              </Typography.Text>
             ) : null}
           </Space>
         );
