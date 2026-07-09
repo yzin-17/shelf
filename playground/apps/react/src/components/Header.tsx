@@ -81,6 +81,13 @@ export default function Header() {
           <Link to="/about" className="nav-link" activeProps={{ className: 'nav-link is-active' }}>
             About
           </Link>
+          <Link
+            to="/outbound"
+            className="nav-link"
+            activeProps={{ className: 'nav-link is-active' }}
+          >
+            Outbound
+          </Link>
           <details ref={detailsRef} className="relative w-full sm:w-auto">
             <summary className="nav-link list-none cursor-pointer">Demos</summary>
             <div

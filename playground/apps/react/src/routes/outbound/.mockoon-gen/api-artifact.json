@@ -1,0 +1,265 @@
+{
+  "schemaVersion": "0.2.0",
+  "sources": [
+    {
+      "id": "src-openapi-001",
+      "type": "file",
+      "uri": "/Users/yzin/code/shelf/playground/apps/react/src/routes/outbound/.mockoon-gen/openapi.yaml",
+      "title": "Outbound Order API",
+      "sha256": "e0d1138353a4badd154717b2673f0f1c2a2665a15278a2cad8fc25de00b46e27",
+      "origin": "imported",
+      "reviewStatus": "confirmed"
+    }
+  ],
+  "openapi": {
+    "file": "/Users/yzin/code/shelf/playground/apps/react/src/routes/outbound/.mockoon-gen/openapi.yaml",
+    "sha256": "e0d1138353a4badd154717b2673f0f1c2a2665a15278a2cad8fc25de00b46e27",
+    "origin": "imported",
+    "reviewStatus": "confirmed"
+  },
+  "reviewItems": [],
+  "endpoints": [
+    {
+      "id": "ep-get-sku-available-warehouses",
+      "operationId": "getSkuAvailableWarehouses",
+      "method": "GET",
+      "path": "/api/skus/{skuId}/available-warehouses",
+      "summary": "Query warehouses with available inventory for a SKU.",
+      "origin": "generated",
+      "reviewStatus": "confirmed",
+      "dto": {
+        "response": "GetSkuAvailableWarehousesResponseDTO"
+      },
+      "vo": {
+        "name": "GetSkuAvailableWarehousesVO",
+        "owner": "api-skill",
+        "origin": "inferred",
+        "reviewStatus": "confirmed",
+        "fields": []
+      },
+      "mapper": {
+        "name": "toGetSkuAvailableWarehousesVO",
+        "enabled": true,
+        "origin": "inferred",
+        "reviewStatus": "unreviewed",
+        "steps": []
+      },
+      "mock": {
+        "origin": "generated",
+        "reviewStatus": "unreviewed",
+        "selection": {
+          "mode": "query",
+          "key": "scenario",
+          "defaultScenario": "success-default"
+        },
+        "scenarios": [
+          {
+            "name": "success-default",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\"skuId\":\"SKU001\",\"warehouses\":[{\"warehouseId\":\"WH001\",\"warehouseName\":\"Shanghai Warehouse\",\"availableQty\":120},{\"warehouseId\":\"WH002\",\"warehouseName\":\"Guangzhou Warehouse\",\"availableQty\":80},{\"warehouseId\":\"WH003\",\"warehouseName\":\"Beijing Warehouse\",\"availableQty\":45}]}",
+            "origin": "generated",
+            "reviewStatus": "confirmed",
+            "enabled": true
+          },
+          {
+            "name": "success-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\"skuId\":\"SKU001\",\"warehouses\":[]}",
+            "origin": "generated",
+            "reviewStatus": "confirmed",
+            "enabled": true
+          }
+        ]
+      },
+      "reviewItems": []
+    },
+    {
+      "id": "ep-list-outbound-orders",
+      "operationId": "listOutboundOrders",
+      "method": "GET",
+      "path": "/api/outbound-orders",
+      "summary": "Query outbound order list.",
+      "origin": "generated",
+      "reviewStatus": "confirmed",
+      "dto": {
+        "response": "ListOutboundOrdersResponseDTO"
+      },
+      "vo": {
+        "name": "ListOutboundOrdersVO",
+        "owner": "api-skill",
+        "origin": "inferred",
+        "reviewStatus": "confirmed",
+        "fields": []
+      },
+      "mapper": {
+        "name": "toListOutboundOrdersVO",
+        "enabled": true,
+        "origin": "inferred",
+        "reviewStatus": "unreviewed",
+        "steps": []
+      },
+      "mock": {
+        "origin": "generated",
+        "reviewStatus": "unreviewed",
+        "selection": {
+          "mode": "query",
+          "key": "scenario",
+          "defaultScenario": "success-default"
+        },
+        "scenarios": [
+          {
+            "name": "success-default",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\"pageNo\":1,\"pageSize\":20,\"total\":1,\"records\":[{\"orderId\":\"90001\",\"orderNo\":\"OUT202607090001\",\"status\":\"DRAFT\",\"skuCount\":1,\"waybillCount\":2,\"totalOutboundQty\":17,\"createdByName\":\"Zhang San\",\"createdAt\":\"2026-07-09 10:30:00\",\"updatedAt\":\"2026-07-09 10:35:00\",\"items\":[{\"skuId\":\"SKU001\",\"waybills\":[{\"waybillNo\":\"SF123456\",\"allocations\":[{\"warehouseId\":\"WH001\",\"outboundQty\":6},{\"warehouseId\":\"WH002\",\"outboundQty\":4}]},{\"waybillNo\":\"SF789000\",\"allocations\":[{\"warehouseId\":\"WH001\",\"outboundQty\":7}]}]}]}]}",
+            "origin": "generated",
+            "reviewStatus": "confirmed",
+            "enabled": true
+          },
+          {
+            "name": "success-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\"pageNo\":1,\"pageSize\":20,\"total\":0,\"records\":[]}",
+            "origin": "generated",
+            "reviewStatus": "confirmed",
+            "enabled": true
+          }
+        ]
+      },
+      "reviewItems": []
+    },
+    {
+      "id": "ep-create-outbound-order",
+      "operationId": "createOutboundOrder",
+      "method": "POST",
+      "path": "/api/outbound-orders",
+      "summary": "Save a draft or submit an outbound order.",
+      "origin": "generated",
+      "reviewStatus": "confirmed",
+      "dto": {
+        "response": "CreateOutboundOrderResponseDTO"
+      },
+      "vo": {
+        "name": "CreateOutboundOrderVO",
+        "owner": "api-skill",
+        "origin": "inferred",
+        "reviewStatus": "confirmed",
+        "fields": []
+      },
+      "mapper": {
+        "name": "toCreateOutboundOrderVO",
+        "enabled": true,
+        "origin": "inferred",
+        "reviewStatus": "unreviewed",
+        "steps": []
+      },
+      "mock": {
+        "origin": "generated",
+        "reviewStatus": "unreviewed",
+        "selection": {
+          "mode": "query",
+          "key": "scenario",
+          "defaultScenario": "success-default"
+        },
+        "scenarios": [
+          {
+            "name": "success-default",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\"orderId\":\"90001\",\"orderNo\":\"OUT202607090001\",\"status\":\"SUBMITTED\"}",
+            "origin": "generated",
+            "reviewStatus": "confirmed",
+            "enabled": true
+          },
+          {
+            "name": "success-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\"orderId\":\"90002\",\"orderNo\":\"OUT202607090002\",\"status\":\"DRAFT\"}",
+            "origin": "generated",
+            "reviewStatus": "confirmed",
+            "enabled": true
+          }
+        ]
+      },
+      "reviewItems": []
+    }
+  ],
+  "outputs": {
+    "apiCode": {
+      "suggestedFile": "apps/react/src/routes/outbound/-api.generated.ts",
+      "placement": "confirmed",
+      "integrationMode": "standalone",
+      "transformResponse": true,
+      "lastGeneratedSha256": null,
+      "origin": "generated",
+      "reviewStatus": "confirmed"
+    },
+    "whistle": {
+      "file": "apps/react/src/routes/outbound/.mockoon-gen/whistle.json",
+      "groupName": "outbound-order",
+      "routes": [
+        {
+          "endpointId": "ep-get-sku-available-warehouses",
+          "operationId": "getSkuAvailableWarehouses",
+          "method": "GET",
+          "apiHost": "^localhost:3000",
+          "sourcePath": "/api/skus/{skuId}/available-warehouses",
+          "sourcePattern": "/api/skus/*/available-warehouses",
+          "targetPort": 6000,
+          "targetPath": "/api/skus/$1/available-warehouses",
+          "origin": "generated",
+          "reviewStatus": "confirmed"
+        },
+        {
+          "endpointId": "ep-list-outbound-orders",
+          "operationId": "listOutboundOrders",
+          "method": "GET",
+          "apiHost": "localhost:3000",
+          "sourcePath": "/api/outbound-orders",
+          "sourcePattern": "/api/outbound-orders",
+          "targetPort": 6000,
+          "targetPath": "/api/outbound-orders",
+          "origin": "generated",
+          "reviewStatus": "confirmed"
+        },
+        {
+          "endpointId": "ep-create-outbound-order",
+          "operationId": "createOutboundOrder",
+          "method": "POST",
+          "apiHost": "localhost:3000",
+          "sourcePath": "/api/outbound-orders",
+          "sourcePattern": "/api/outbound-orders",
+          "targetPort": 6000,
+          "targetPath": "/api/outbound-orders",
+          "origin": "generated",
+          "reviewStatus": "confirmed"
+        }
+      ]
+    },
+    "mockoon": {
+      "file": "apps/react/src/routes/outbound/.mockoon-gen/mockoon.json",
+      "port": 6000,
+      "defaultHeaders": {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      "origin": "generated",
+      "reviewStatus": "confirmed"
+    }
+  }
+}

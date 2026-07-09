@@ -1,0 +1,224 @@
+{
+  "uuid": "4b05d7a3-12a5-483a-a1de-2775ec29cbf3",
+  "lastMigration": 33,
+  "name": "mockoon-gen",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 6000,
+  "routes": [
+    {
+      "uuid": "b13eaa2f-d8ab-4113-859d-df32c6886d09",
+      "method": "get",
+      "endpoint": "api/skus/:skuId/available-warehouses",
+      "responses": [
+        {
+          "uuid": "c5b3d64c-3d52-4218-9543-c901c212d82f",
+          "body": "{\n  \"skuId\": \"SKU001\",\n  \"warehouses\": [\n    {\n      \"warehouseId\": \"WH001\",\n      \"warehouseName\": \"Shanghai Warehouse\",\n      \"availableQty\": 120\n    },\n    {\n      \"warehouseId\": \"WH002\",\n      \"warehouseName\": \"Guangzhou Warehouse\",\n      \"availableQty\": 80\n    },\n    {\n      \"warehouseId\": \"WH003\",\n      \"warehouseName\": \"Beijing Warehouse\",\n      \"availableQty\": 45\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "success-default",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "3474ff54-687f-4cee-a4cb-44f363ff56bb",
+          "body": "{\"skuId\":\"SKU001\",\"warehouses\":[]}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "success-empty",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "streamingMode": null,
+      "streamingInterval": 0,
+      "type": "http",
+      "documentation": "",
+      "responseMode": null
+    },
+    {
+      "uuid": "c83a345a-16dd-4a09-927b-37acc8d23f0f",
+      "method": "get",
+      "endpoint": "api/outbound-orders",
+      "responses": [
+        {
+          "uuid": "7ef79eba-18cd-4a7d-aaad-60ce4e701d8e",
+          "body": "{\n  \"pageNo\": 1,\n  \"pageSize\": 20,\n  \"total\": 1,\n  \"records\": [\n    {\n      \"orderId\": \"90001\",\n      \"orderNo\": \"OUT202607090001\",\n      \"status\": \"DRAFT\",\n      \"skuCount\": 1,\n      \"waybillCount\": 2,\n      \"totalOutboundQty\": 17,\n      \"createdByName\": \"Zhang San\",\n      \"createdAt\": \"2026-07-09 10:30:00\",\n      \"updatedAt\": \"2026-07-09 10:35:00\",\n      \"items\": [\n        {\n          \"skuId\": \"SKU001\",\n          \"waybills\": [\n            {\n              \"waybillNo\": \"SF123456\",\n              \"allocations\": [\n                {\n                  \"warehouseId\": \"WH001\",\n                  \"outboundQty\": 6\n                },\n                {\n                  \"warehouseId\": \"WH002\",\n                  \"outboundQty\": 4\n                }\n              ]\n            },\n            {\n              \"waybillNo\": \"SF789000\",\n              \"allocations\": [\n                {\n                  \"warehouseId\": \"WH001\",\n                  \"outboundQty\": 7\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "success-default",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "6a41548f-e0fd-41cb-98dc-c3f6cfcc9704",
+          "body": "{\"pageNo\":1,\"pageSize\":20,\"total\":0,\"records\":[]}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "success-empty",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "streamingMode": null,
+      "streamingInterval": 0,
+      "type": "http",
+      "documentation": "",
+      "responseMode": null
+    },
+    {
+      "uuid": "190c51e3-524f-430b-ac4f-36c110cba938",
+      "method": "post",
+      "endpoint": "api/outbound-orders",
+      "responses": [
+        {
+          "uuid": "f6bf95ba-feda-475e-862d-a60b8cb06c03",
+          "body": "{\n  \"orderId\": \"90001\",\n  \"orderNo\": \"OUT202607090001\",\n  \"status\": \"SUBMITTED\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "success-default",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "b166e953-b86a-4a74-8689-b26ca0513512",
+          "body": "{\"orderId\":\"90002\",\"orderNo\":\"OUT202607090002\",\"status\":\"DRAFT\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "success-empty",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "streamingMode": null,
+      "streamingInterval": 0,
+      "type": "http",
+      "documentation": "",
+      "responseMode": "RANDOM"
+    }
+  ],
+  "hostname": "",
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "b13eaa2f-d8ab-4113-859d-df32c6886d09"
+    },
+    {
+      "type": "route",
+      "uuid": "c83a345a-16dd-4a09-927b-37acc8d23f0f"
+    },
+    {
+      "type": "route",
+      "uuid": "190c51e3-524f-430b-ac4f-36c110cba938"
+    }
+  ],
+  "folders": [],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [],
+  "proxyReqHeaders": [],
+  "proxyResHeaders": [],
+  "data": [],
+  "callbacks": []
+}

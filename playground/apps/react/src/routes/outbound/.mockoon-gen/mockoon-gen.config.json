@@ -1,0 +1,12 @@
+{
+  "artifactDir": "apps/react/src/routes/outbound/.mockoon-gen",
+  "openapiFile": "apps/react/src/routes/outbound/.mockoon-gen/openapi.yaml",
+  "mockoonFile": "apps/react/src/routes/outbound/.mockoon-gen/mockoon.json",
+  "whistleFile": "apps/react/src/routes/outbound/.mockoon-gen/whistle.json",
+  "apiOutput": "apps/react/src/routes/outbound/-api.generated.ts",
+  "splitApiOutput": false,
+  "transformResponse": true,
+  "mockoonPort": 6000,
+  "whistleGroupName": "outbound-order",
+  "confirmPlacement": true
+}

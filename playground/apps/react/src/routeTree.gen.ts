@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OutboundIndexRouteImport } from './routes/outbound/index'
 import { Route as DemoZustandRouteImport } from './routes/demo/zustand'
 import { Route as DemoValtioRouteImport } from './routes/demo/valtio'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
@@ -46,6 +47,11 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OutboundIndexRoute = OutboundIndexRouteImport.update({
+  id: '/outbound/',
+  path: '/outbound/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoZustandRoute = DemoZustandRouteImport.update({
@@ -168,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/valtio': typeof DemoValtioRoute
   '/demo/zustand': typeof DemoZustandRoute
+  '/outbound/': typeof OutboundIndexRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
   '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/valtio': typeof DemoValtioRoute
   '/demo/zustand': typeof DemoZustandRoute
+  '/outbound': typeof OutboundIndexRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
   '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
@@ -219,6 +227,7 @@ export interface FileRoutesById {
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/valtio': typeof DemoValtioRoute
   '/demo/zustand': typeof DemoZustandRoute
+  '/outbound/': typeof OutboundIndexRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
   '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
@@ -246,6 +255,7 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/demo/valtio'
     | '/demo/zustand'
+    | '/outbound/'
     | '/demo/api/mcp-todos'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
@@ -271,6 +281,7 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/demo/valtio'
     | '/demo/zustand'
+    | '/outbound'
     | '/demo/api/mcp-todos'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
@@ -296,6 +307,7 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/demo/valtio'
     | '/demo/zustand'
+    | '/outbound/'
     | '/demo/api/mcp-todos'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
@@ -322,6 +334,7 @@ export interface RootRouteChildren {
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   DemoValtioRoute: typeof DemoValtioRoute
   DemoZustandRoute: typeof DemoZustandRoute
+  OutboundIndexRoute: typeof OutboundIndexRoute
   DemoApiMcpTodosRoute: typeof DemoApiMcpTodosRoute
   DemoApiAiImageRoute: typeof DemoApiAiImageRoute
   DemoApiAiStructuredRoute: typeof DemoApiAiStructuredRoute
@@ -350,6 +363,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/outbound/': {
+      id: '/outbound/'
+      path: '/outbound'
+      fullPath: '/outbound/'
+      preLoaderRoute: typeof OutboundIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/zustand': {
@@ -514,6 +534,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   DemoValtioRoute: DemoValtioRoute,
   DemoZustandRoute: DemoZustandRoute,
+  OutboundIndexRoute: OutboundIndexRoute,
   DemoApiMcpTodosRoute: DemoApiMcpTodosRoute,
   DemoApiAiImageRoute: DemoApiAiImageRoute,
   DemoApiAiStructuredRoute: DemoApiAiStructuredRoute,
