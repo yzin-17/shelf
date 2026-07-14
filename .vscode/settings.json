@@ -1,2 +1,5 @@
 {
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "oxc.fmt.configPath": "playground/.oxfmtrc.json",
+  "oxc.configPath": "playground/.oxlintrc.json"
 }
