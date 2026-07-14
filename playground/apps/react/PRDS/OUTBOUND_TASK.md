@@ -29,7 +29,7 @@ skuId -> waybills[] -> allocations[]
 - Whistle 转发：`localhost:3000/api/* -> 127.0.0.1:6000/api/*`。
 - 页面路由：`/outbound`。
 - 页面目录：`apps/react/src/routes/outbound`。
-- mockoon-gen 产物目录：`apps/react/src/routes/outbound/.mockoon-gen`。
+- mockoon-gen 产物目录：`apps/react/src/routes/outbound/mockoon-gen`。
 - 页面 API 封装：`apps/react/src/routes/outbound/-api.ts`。
 - 生成 API 骨架：`apps/react/src/routes/outbound/-api.generated.ts`。
 - 文件名前缀 `-`：这是 TanStack 文件路由的 ignore 约定，表示这些文件不是路由文件，避免路由生成器把 API、测试和工具函数当作页面扫描。
@@ -105,10 +105,10 @@ skuId -> waybills[] -> allocations[]
 
 `$mockoon-gen` 产物：
 
-- `apps/react/src/routes/outbound/.mockoon-gen/openapi.yaml`
-- `apps/react/src/routes/outbound/.mockoon-gen/api-artifact.json`
-- `apps/react/src/routes/outbound/.mockoon-gen/whistle.json`
-- `apps/react/src/routes/outbound/.mockoon-gen/mockoon.json`
+- `apps/react/src/routes/outbound/mockoon-gen/openapi.yaml`
+- `apps/react/src/routes/outbound/mockoon-gen/api-artifact.json`
+- `apps/react/src/routes/outbound/mockoon-gen/whistle.json`
+- `apps/react/src/routes/outbound/mockoon-gen/mockoon.json`
 - `apps/react/src/routes/outbound/-api.generated.ts`
 
 ## 测试与验证
@@ -116,7 +116,7 @@ skuId -> waybills[] -> allocations[]
 当前验证方式：
 
 - `node --test apps/react/src/routes/outbound/-outbound-table.test.ts`
-- `node /Users/yzin/.agents/skills/mockoon-gen/bin/mockoon-gen.mjs validate --from apps/react/src/routes/outbound/.mockoon-gen/api-artifact.json --strict --cwd /Users/yzin/code/shelf/playground`
+- `node /Users/yzin/.agents/skills/mockoon-gen/bin/mockoon-gen.mjs validate --from apps/react/src/routes/outbound/mockoon-gen/api-artifact.json --strict --cwd /Users/yzin/code/shelf/playground`
 - `pnpm --filter @vite-test/react build`
 
 已知限制：
