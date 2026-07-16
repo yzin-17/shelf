@@ -1,0 +1,234 @@
+openapi: 3.0.3
+info:
+  title: Outbound Order API
+  version: 1.0.0
+  description: API contract for the outbound entry page.
+servers:
+  - url: http://127.0.0.1:6000
+paths:
+  /api/outbound-orders:
+    get:
+      summary: Get the current outbound order payload for page rendering
+      operationId: getOutboundOrder
+      responses:
+        '200':
+          description: Current outbound order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutboundOrderResponse'
+              examples:
+                default:
+                  value:
+                    orderId: '90001'
+                    orderNo: 'OUT202607140001'
+                    status: DRAFT
+                    remark: Fragile items
+                    items:
+                      - skuId: SKU001
+                        waybills:
+                          - waybillNo: WB20260714001
+                            allocations:
+                              - warehouseId: WH001
+                                outboundQty: 12
+                              - warehouseId: WH002
+                                outboundQty: 8
+                          - waybillNo: WB20260714002
+                            allocations:
+                              - warehouseId: WH003
+                                outboundQty: 5
+                      - skuId: SKU002
+                        waybills:
+                          - waybillNo: WB20260714003
+                            allocations:
+                              - warehouseId: WH004
+                                outboundQty: 6
+    post:
+      summary: Submit the outbound order
+      operationId: submitOutboundOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitOutboundOrderRequest'
+            examples:
+              default:
+                value:
+                  action: SUBMIT
+                  remark: Fragile items
+                  items:
+                    - skuId: SKU001
+                      waybills:
+                        - waybillNo: WB20260714001
+                          allocations:
+                            - warehouseId: WH001
+                              outboundQty: 12
+                            - warehouseId: WH002
+                              outboundQty: 8
+      responses:
+        '200':
+          description: Submission result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmitOutboundOrderResponse'
+              examples:
+                default:
+                  value:
+                    orderId: '90001'
+                    orderNo: 'OUT202607140001'
+                    status: SUBMITTED
+  /api/skus/{skuId}/available-warehouses:
+    get:
+      summary: Query available warehouses for a SKU
+      operationId: getAvailableWarehouses
+      parameters:
+        - name: skuId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: keyword
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Available warehouses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableWarehouseResponse'
+              examples:
+                default:
+                  value:
+                    skuId: SKU001
+                    warehouses:
+                      - warehouseId: WH001
+                        warehouseName: Shanghai Warehouse
+                        availableQty: 20
+                      - warehouseId: WH002
+                        warehouseName: Guangzhou Warehouse
+                        availableQty: 15
+                      - warehouseId: WH003
+                        warehouseName: Chengdu Warehouse
+                        availableQty: 5
+components:
+  schemas:
+    OutboundAllocation:
+      type: object
+      required:
+        - warehouseId
+        - outboundQty
+      properties:
+        warehouseId:
+          type: string
+        outboundQty:
+          type: integer
+          minimum: 1
+    OutboundWaybill:
+      type: object
+      required:
+        - waybillNo
+        - allocations
+      properties:
+        waybillNo:
+          type: string
+        allocations:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/OutboundAllocation'
+    OutboundItem:
+      type: object
+      required:
+        - skuId
+        - waybills
+      properties:
+        skuId:
+          type: string
+        waybills:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/OutboundWaybill'
+    OutboundOrderResponse:
+      type: object
+      required:
+        - orderId
+        - orderNo
+        - status
+        - items
+      properties:
+        orderId:
+          type: string
+        orderNo:
+          type: string
+        status:
+          type: string
+          enum: [DRAFT, SUBMITTED]
+        remark:
+          type: string
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/OutboundItem'
+    SubmitOutboundOrderRequest:
+      type: object
+      required:
+        - action
+        - items
+      properties:
+        action:
+          type: string
+          enum: [SUBMIT]
+        remark:
+          type: string
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/OutboundItem'
+    SubmitOutboundOrderResponse:
+      type: object
+      required:
+        - orderId
+        - orderNo
+        - status
+      properties:
+        orderId:
+          type: string
+        orderNo:
+          type: string
+        status:
+          type: string
+          enum: [SUBMITTED]
+    AvailableWarehouse:
+      type: object
+      required:
+        - warehouseId
+        - warehouseName
+        - availableQty
+      properties:
+        warehouseId:
+          type: string
+        warehouseName:
+          type: string
+        availableQty:
+          type: integer
+          minimum: 0
+    AvailableWarehouseResponse:
+      type: object
+      required:
+        - skuId
+        - warehouses
+      properties:
+        skuId:
+          type: string
+        warehouses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableWarehouse'

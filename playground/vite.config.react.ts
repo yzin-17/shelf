@@ -21,12 +21,12 @@ const config = defineConfig({
     contentCollections(),
     tailwindcss(),
     tanstackStart(),
-    react(),
-    babel({ presets: [reactCompilerPreset()] }),
     codeInspectorPlugin({
       bundler: 'vite',
       hideDomPathAttr: true,
     }),
+    react(),
+    babel({ presets: [reactCompilerPreset()] }),
   ],
   server: {
     port: 3000,

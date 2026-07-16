@@ -31,7 +31,6 @@ skuId -> waybills[] -> allocations[]
 - 页面目录：`apps/react/src/routes/outbound`。
 - mockoon-gen 产物目录：`apps/react/src/routes/outbound/mockoon-gen`。
 - 页面 API 封装：`apps/react/src/routes/outbound/-api.ts`。
-- 生成 API 骨架：`apps/react/src/routes/outbound/-api.generated.ts`。
 - 文件名前缀 `-`：这是 TanStack 文件路由的 ignore 约定，表示这些文件不是路由文件，避免路由生成器把 API、测试和工具函数当作页面扫描。
 
 ## 页面范围
@@ -79,12 +78,6 @@ skuId -> waybills[] -> allocations[]
 
 ## 接口范围
 
-使用 `$mockoon-gen` 从 OpenAPI 生成以下 mock 资产：
-
-- 查询 SKU 可用仓库：`GET /api/skus/{skuId}/available-warehouses`
-- 创建或提交出库单：`POST /api/outbound-orders`
-- 获取出库单列表：`GET /api/outbound-orders`
-
 当前页面只直接使用：
 
 - `GET /api/skus/{skuId}/available-warehouses`
@@ -101,16 +94,6 @@ skuId -> waybills[] -> allocations[]
 - `skuId + waybillNo + warehouseId` 不允许重复。
 - 不做同一个 `skuId + warehouseId` 的跨行合计校验。
 
-## 生成资产
-
-`$mockoon-gen` 产物：
-
-- `apps/react/src/routes/outbound/mockoon-gen/openapi.yaml`
-- `apps/react/src/routes/outbound/mockoon-gen/api-artifact.json`
-- `apps/react/src/routes/outbound/mockoon-gen/whistle.json`
-- `apps/react/src/routes/outbound/mockoon-gen/mockoon.json`
-- `apps/react/src/routes/outbound/-api.generated.ts`
-
 ## 测试与验证
 
 当前验证方式：
@@ -122,7 +105,6 @@ skuId -> waybills[] -> allocations[]
 已知限制：
 
 - 全仓 `pnpm run typecheck` 当前存在既有 demo/resume/vue 类型错误，和 `/outbound` 新增文件无关。
-- `mockoon-gen` 当前生成的 `-api.generated.ts` 是路径和函数骨架，DTO 字段为空；页面实际 fetch 封装在 `-api.ts`，仍以 OpenAPI 和 mockoon-gen 产物作为协作契约来源。
 
 ## 请确认
 

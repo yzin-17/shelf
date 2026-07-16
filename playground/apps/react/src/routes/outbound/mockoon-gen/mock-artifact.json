@@ -1,0 +1,282 @@
+{
+  "schemaVersion": "0.3.0",
+  "openapi": {
+    "file": "/Users/yzin/code/shelf/playground/apps/react/src/routes/outbound/mockoon-gen/openapi.yaml",
+    "sha256": "28da0e14095b46fb2e69beaefe9bbd600617038110222c7a635e1acd063b500c",
+    "origin": "manual",
+    "reviewStatus": "confirmed"
+  },
+  "reviewItems": [],
+  "policies": {
+    "listScenario": {
+      "enabled": true,
+      "itemCount": 20
+    },
+    "randomEmptyData": true
+  },
+  "endpoints": [
+    {
+      "id": "ep-get-outbound-order",
+      "operationId": "getOutboundOrder",
+      "method": "GET",
+      "path": "/api/outbound-orders",
+      "summary": "Get the current outbound order payload for page rendering",
+      "mock": {
+        "selection": {
+          "mode": "query",
+          "key": "scenario",
+          "defaultScenario": "success-default"
+        },
+        "semanticMappings": [
+          {
+            "path": "orderId",
+            "faker": "string.numeric"
+          },
+          {
+            "path": "orderNo",
+            "faker": "string.alphanumeric"
+          },
+          {
+            "path": "remark",
+            "faker": "lorem.sentence"
+          },
+          {
+            "path": "items[].skuId",
+            "faker": "string.alphanumeric"
+          },
+          {
+            "path": "items[].waybills[].waybillNo",
+            "faker": "string.alphanumeric"
+          },
+          {
+            "path": "items[].waybills[].allocations[].warehouseId",
+            "faker": "string.alphanumeric"
+          }
+        ],
+        "scenarios": [
+          {
+            "name": "success-default",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": [{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"waybills\": [{\n  \"waybillNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"allocations\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"outboundQty\": {{faker 'number.int' min=1 max=9007199254740991}}\n}]\n}]\n}]\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "success-list-20",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": [{{#repeat 20}}{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"waybills\": [{\n  \"waybillNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"allocations\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"outboundQty\": {{faker 'number.int' min=1 max=9007199254740991}}\n}]\n}]\n}{{/repeat}}]\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "success-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": []\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "error-default",
+            "statusCode": 500,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"code\": \"MOCK_ERROR\"\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "success-random-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"orderId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"orderNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"status\": {{#if (boolean)}}null{{else}}\"DRAFT\"{{/if}},\n  \"remark\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'lorem.sentence'}}\"{{/if}}{{/if}},\n  \"items\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"skuId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"waybills\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"waybillNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"allocations\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"warehouseId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"outboundQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=1 max=9007199254740991}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}",
+            "origin": "generated",
+            "enabled": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "ep-submit-outbound-order",
+      "operationId": "submitOutboundOrder",
+      "method": "POST",
+      "path": "/api/outbound-orders",
+      "summary": "Submit the outbound order",
+      "mock": {
+        "selection": {
+          "mode": "query",
+          "key": "scenario",
+          "defaultScenario": "success-default"
+        },
+        "semanticMappings": [
+          {
+            "path": "orderId",
+            "faker": "string.numeric"
+          },
+          {
+            "path": "orderNo",
+            "faker": "string.alphanumeric"
+          }
+        ],
+        "scenarios": [
+          {
+            "name": "success-default",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"SUBMITTED\"\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "success-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"SUBMITTED\"\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "error-default",
+            "statusCode": 500,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"code\": \"MOCK_ERROR\"\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "success-random-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"orderId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"orderNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"status\": {{#if (boolean)}}null{{else}}\"SUBMITTED\"{{/if}}\n}{{/if}}{{/if}}",
+            "origin": "generated",
+            "enabled": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "ep-get-available-warehouses",
+      "operationId": "getAvailableWarehouses",
+      "method": "GET",
+      "path": "/api/skus/{skuId}/available-warehouses",
+      "summary": "Query available warehouses for a SKU",
+      "mock": {
+        "selection": {
+          "mode": "query",
+          "key": "scenario",
+          "defaultScenario": "success-default"
+        },
+        "semanticMappings": [
+          {
+            "path": "skuId",
+            "faker": "string.alphanumeric"
+          },
+          {
+            "path": "warehouses[].warehouseId",
+            "faker": "string.alphanumeric"
+          },
+          {
+            "path": "warehouses[].warehouseName",
+            "faker": "location.city"
+          }
+        ],
+        "scenarios": [
+          {
+            "name": "success-default",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouseName\": \"{{faker 'location.city'}}\",\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}}\n}]\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "success-list-20",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": [{{#repeat 20}}{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouseName\": \"{{faker 'location.city'}}\",\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}}\n}{{/repeat}}]\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "success-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": []\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "error-default",
+            "statusCode": 500,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{\n  \"code\": \"MOCK_ERROR\"\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "success-random-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"skuId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"warehouses\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"warehouseId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"warehouseName\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'location.city'}}\"{{/if}}{{/if}},\n  \"availableQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=9007199254740991}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}",
+            "origin": "generated",
+            "enabled": true
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {
+    "whistle": {
+      "groupName": "outbound-local",
+      "routes": [
+        {
+          "endpointId": "ep-get-outbound-order",
+          "apiHost": "localhost:3000"
+        },
+        {
+          "endpointId": "ep-submit-outbound-order",
+          "apiHost": "localhost:3000"
+        },
+        {
+          "endpointId": "ep-get-available-warehouses",
+          "apiHost": "localhost:3000"
+        }
+      ]
+    },
+    "mockoon": {
+      "port": 6000,
+      "defaultHeaders": {
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    }
+  }
+}

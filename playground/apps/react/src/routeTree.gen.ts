@@ -8,238 +8,239 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root';
-import { Route as McpRouteImport } from './routes/mcp';
-import { Route as AboutRouteImport } from './routes/about';
-import { Route as IndexRouteImport } from './routes/index';
-import { Route as OutboundIndexRouteImport } from './routes/outbound/index';
-import { Route as DemoZustandRouteImport } from './routes/demo/zustand';
-import { Route as DemoValtioRouteImport } from './routes/demo/valtio';
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query';
-import { Route as DemoStoreRouteImport } from './routes/demo/store';
-import { Route as DemoReduxRouteImport } from './routes/demo/redux';
-import { Route as DemoMockRouteImport } from './routes/demo/mock';
-import { Route as DemoMobxRouteImport } from './routes/demo/mobx';
-import { Route as DemoMcpTodosRouteImport } from './routes/demo/mcp-todos';
-import { Route as DemoInfiniteScrollRouteImport } from './routes/demo/infinite-scroll';
-import { Route as DemoDynamicListRouteImport } from './routes/demo/dynamic-list';
-import { Route as DemoContextRouteImport } from './routes/demo/context';
-import { Route as DemoAiStructuredRouteImport } from './routes/demo/ai-structured';
-import { Route as DemoAiImageRouteImport } from './routes/demo/ai-image';
-import { Route as DemoAiChatRouteImport } from './routes/demo/ai-chat';
-import { Route as ApiResumeChatRouteImport } from './routes/api.resume-chat';
-import { Route as DemoApiMcpTodosRouteImport } from './routes/demo/api.mcp-todos';
-import { Route as DemoApiAiTtsRouteImport } from './routes/demo/api.ai.tts';
-import { Route as DemoApiAiTranscriptionRouteImport } from './routes/demo/api.ai.transcription';
-import { Route as DemoApiAiStructuredRouteImport } from './routes/demo/api.ai.structured';
-import { Route as DemoApiAiImageRouteImport } from './routes/demo/api.ai.image';
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as OutboundRouteImport } from './routes/outbound'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as DemoZustandRouteImport } from './routes/demo/zustand'
+import { Route as DemoValtioRouteImport } from './routes/demo/valtio'
+import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
+import { Route as DemoStoreRouteImport } from './routes/demo/store'
+import { Route as DemoReduxRouteImport } from './routes/demo/redux'
+import { Route as DemoMockRouteImport } from './routes/demo/mock'
+import { Route as DemoMobxRouteImport } from './routes/demo/mobx'
+import { Route as DemoMcpTodosRouteImport } from './routes/demo/mcp-todos'
+import { Route as DemoInfiniteScrollRouteImport } from './routes/demo/infinite-scroll'
+import { Route as DemoDynamicListRouteImport } from './routes/demo/dynamic-list'
+import { Route as DemoContextRouteImport } from './routes/demo/context'
+import { Route as DemoAiStructuredRouteImport } from './routes/demo/ai-structured'
+import { Route as DemoAiImageRouteImport } from './routes/demo/ai-image'
+import { Route as DemoAiChatRouteImport } from './routes/demo/ai-chat'
+import { Route as ApiResumeChatRouteImport } from './routes/api.resume-chat'
+import { Route as DemoApiMcpTodosRouteImport } from './routes/demo/api.mcp-todos'
+import { Route as DemoApiAiTtsRouteImport } from './routes/demo/api.ai.tts'
+import { Route as DemoApiAiTranscriptionRouteImport } from './routes/demo/api.ai.transcription'
+import { Route as DemoApiAiStructuredRouteImport } from './routes/demo/api.ai.structured'
+import { Route as DemoApiAiImageRouteImport } from './routes/demo/api.ai.image'
 
+const OutboundRoute = OutboundRouteImport.update({
+  id: '/outbound',
+  path: '/outbound',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any);
-const OutboundIndexRoute = OutboundIndexRouteImport.update({
-  id: '/outbound/',
-  path: '/outbound/',
-  getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoZustandRoute = DemoZustandRouteImport.update({
   id: '/demo/zustand',
   path: '/demo/zustand',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoValtioRoute = DemoValtioRouteImport.update({
   id: '/demo/valtio',
   path: '/demo/valtio',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
   path: '/demo/tanstack-query',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoStoreRoute = DemoStoreRouteImport.update({
   id: '/demo/store',
   path: '/demo/store',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoReduxRoute = DemoReduxRouteImport.update({
   id: '/demo/redux',
   path: '/demo/redux',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoMockRoute = DemoMockRouteImport.update({
   id: '/demo/mock',
   path: '/demo/mock',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoMobxRoute = DemoMobxRouteImport.update({
   id: '/demo/mobx',
   path: '/demo/mobx',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoMcpTodosRoute = DemoMcpTodosRouteImport.update({
   id: '/demo/mcp-todos',
   path: '/demo/mcp-todos',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoInfiniteScrollRoute = DemoInfiniteScrollRouteImport.update({
   id: '/demo/infinite-scroll',
   path: '/demo/infinite-scroll',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoDynamicListRoute = DemoDynamicListRouteImport.update({
   id: '/demo/dynamic-list',
   path: '/demo/dynamic-list',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoContextRoute = DemoContextRouteImport.update({
   id: '/demo/context',
   path: '/demo/context',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoAiStructuredRoute = DemoAiStructuredRouteImport.update({
   id: '/demo/ai-structured',
   path: '/demo/ai-structured',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoAiImageRoute = DemoAiImageRouteImport.update({
   id: '/demo/ai-image',
   path: '/demo/ai-image',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoAiChatRoute = DemoAiChatRouteImport.update({
   id: '/demo/ai-chat',
   path: '/demo/ai-chat',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const ApiResumeChatRoute = ApiResumeChatRouteImport.update({
   id: '/api/resume-chat',
   path: '/api/resume-chat',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoApiMcpTodosRoute = DemoApiMcpTodosRouteImport.update({
   id: '/demo/api/mcp-todos',
   path: '/demo/api/mcp-todos',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoApiAiTtsRoute = DemoApiAiTtsRouteImport.update({
   id: '/demo/api/ai/tts',
   path: '/demo/api/ai/tts',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoApiAiTranscriptionRoute = DemoApiAiTranscriptionRouteImport.update({
   id: '/demo/api/ai/transcription',
   path: '/demo/api/ai/transcription',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoApiAiStructuredRoute = DemoApiAiStructuredRouteImport.update({
   id: '/demo/api/ai/structured',
   path: '/demo/api/ai/structured',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoApiAiImageRoute = DemoApiAiImageRouteImport.update({
   id: '/demo/api/ai/image',
   path: '/demo/api/ai/image',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute;
-  '/about': typeof AboutRoute;
-  '/mcp': typeof McpRoute;
-  '/api/resume-chat': typeof ApiResumeChatRoute;
-  '/demo/ai-chat': typeof DemoAiChatRoute;
-  '/demo/ai-image': typeof DemoAiImageRoute;
-  '/demo/ai-structured': typeof DemoAiStructuredRoute;
-  '/demo/context': typeof DemoContextRoute;
-  '/demo/dynamic-list': typeof DemoDynamicListRoute;
-  '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute;
-  '/demo/mcp-todos': typeof DemoMcpTodosRoute;
-  '/demo/mobx': typeof DemoMobxRoute;
-  '/demo/mock': typeof DemoMockRoute;
-  '/demo/redux': typeof DemoReduxRoute;
-  '/demo/store': typeof DemoStoreRoute;
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute;
-  '/demo/valtio': typeof DemoValtioRoute;
-  '/demo/zustand': typeof DemoZustandRoute;
-  '/outbound/': typeof OutboundIndexRoute;
-  '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute;
-  '/demo/api/ai/image': typeof DemoApiAiImageRoute;
-  '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute;
-  '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute;
-  '/demo/api/ai/tts': typeof DemoApiAiTtsRoute;
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/mcp': typeof McpRoute
+  '/outbound': typeof OutboundRoute
+  '/api/resume-chat': typeof ApiResumeChatRoute
+  '/demo/ai-chat': typeof DemoAiChatRoute
+  '/demo/ai-image': typeof DemoAiImageRoute
+  '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/context': typeof DemoContextRoute
+  '/demo/dynamic-list': typeof DemoDynamicListRoute
+  '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
+  '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/mobx': typeof DemoMobxRoute
+  '/demo/mock': typeof DemoMockRoute
+  '/demo/redux': typeof DemoReduxRoute
+  '/demo/store': typeof DemoStoreRoute
+  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/demo/valtio': typeof DemoValtioRoute
+  '/demo/zustand': typeof DemoZustandRoute
+  '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
+  '/demo/api/ai/image': typeof DemoApiAiImageRoute
+  '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
+  '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute
+  '/demo/api/ai/tts': typeof DemoApiAiTtsRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute;
-  '/about': typeof AboutRoute;
-  '/mcp': typeof McpRoute;
-  '/api/resume-chat': typeof ApiResumeChatRoute;
-  '/demo/ai-chat': typeof DemoAiChatRoute;
-  '/demo/ai-image': typeof DemoAiImageRoute;
-  '/demo/ai-structured': typeof DemoAiStructuredRoute;
-  '/demo/context': typeof DemoContextRoute;
-  '/demo/dynamic-list': typeof DemoDynamicListRoute;
-  '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute;
-  '/demo/mcp-todos': typeof DemoMcpTodosRoute;
-  '/demo/mobx': typeof DemoMobxRoute;
-  '/demo/mock': typeof DemoMockRoute;
-  '/demo/redux': typeof DemoReduxRoute;
-  '/demo/store': typeof DemoStoreRoute;
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute;
-  '/demo/valtio': typeof DemoValtioRoute;
-  '/demo/zustand': typeof DemoZustandRoute;
-  '/outbound': typeof OutboundIndexRoute;
-  '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute;
-  '/demo/api/ai/image': typeof DemoApiAiImageRoute;
-  '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute;
-  '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute;
-  '/demo/api/ai/tts': typeof DemoApiAiTtsRoute;
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/mcp': typeof McpRoute
+  '/outbound': typeof OutboundRoute
+  '/api/resume-chat': typeof ApiResumeChatRoute
+  '/demo/ai-chat': typeof DemoAiChatRoute
+  '/demo/ai-image': typeof DemoAiImageRoute
+  '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/context': typeof DemoContextRoute
+  '/demo/dynamic-list': typeof DemoDynamicListRoute
+  '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
+  '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/mobx': typeof DemoMobxRoute
+  '/demo/mock': typeof DemoMockRoute
+  '/demo/redux': typeof DemoReduxRoute
+  '/demo/store': typeof DemoStoreRoute
+  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/demo/valtio': typeof DemoValtioRoute
+  '/demo/zustand': typeof DemoZustandRoute
+  '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
+  '/demo/api/ai/image': typeof DemoApiAiImageRoute
+  '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
+  '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute
+  '/demo/api/ai/tts': typeof DemoApiAiTtsRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  '/': typeof IndexRoute;
-  '/about': typeof AboutRoute;
-  '/mcp': typeof McpRoute;
-  '/api/resume-chat': typeof ApiResumeChatRoute;
-  '/demo/ai-chat': typeof DemoAiChatRoute;
-  '/demo/ai-image': typeof DemoAiImageRoute;
-  '/demo/ai-structured': typeof DemoAiStructuredRoute;
-  '/demo/context': typeof DemoContextRoute;
-  '/demo/dynamic-list': typeof DemoDynamicListRoute;
-  '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute;
-  '/demo/mcp-todos': typeof DemoMcpTodosRoute;
-  '/demo/mobx': typeof DemoMobxRoute;
-  '/demo/mock': typeof DemoMockRoute;
-  '/demo/redux': typeof DemoReduxRoute;
-  '/demo/store': typeof DemoStoreRoute;
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute;
-  '/demo/valtio': typeof DemoValtioRoute;
-  '/demo/zustand': typeof DemoZustandRoute;
-  '/outbound/': typeof OutboundIndexRoute;
-  '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute;
-  '/demo/api/ai/image': typeof DemoApiAiImageRoute;
-  '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute;
-  '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute;
-  '/demo/api/ai/tts': typeof DemoApiAiTtsRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/mcp': typeof McpRoute
+  '/outbound': typeof OutboundRoute
+  '/api/resume-chat': typeof ApiResumeChatRoute
+  '/demo/ai-chat': typeof DemoAiChatRoute
+  '/demo/ai-image': typeof DemoAiImageRoute
+  '/demo/ai-structured': typeof DemoAiStructuredRoute
+  '/demo/context': typeof DemoContextRoute
+  '/demo/dynamic-list': typeof DemoDynamicListRoute
+  '/demo/infinite-scroll': typeof DemoInfiniteScrollRoute
+  '/demo/mcp-todos': typeof DemoMcpTodosRoute
+  '/demo/mobx': typeof DemoMobxRoute
+  '/demo/mock': typeof DemoMockRoute
+  '/demo/redux': typeof DemoReduxRoute
+  '/demo/store': typeof DemoStoreRoute
+  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/demo/valtio': typeof DemoValtioRoute
+  '/demo/zustand': typeof DemoZustandRoute
+  '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
+  '/demo/api/ai/image': typeof DemoApiAiImageRoute
+  '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
+  '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute
+  '/demo/api/ai/tts': typeof DemoApiAiTtsRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
     | '/mcp'
+    | '/outbound'
     | '/api/resume-chat'
     | '/demo/ai-chat'
     | '/demo/ai-image'
@@ -255,17 +256,17 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/demo/valtio'
     | '/demo/zustand'
-    | '/outbound/'
     | '/demo/api/mcp-todos'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
     | '/demo/api/ai/transcription'
-    | '/demo/api/ai/tts';
-  fileRoutesByTo: FileRoutesByTo;
+    | '/demo/api/ai/tts'
+  fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/mcp'
+    | '/outbound'
     | '/api/resume-chat'
     | '/demo/ai-chat'
     | '/demo/ai-image'
@@ -281,17 +282,17 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/demo/valtio'
     | '/demo/zustand'
-    | '/outbound'
     | '/demo/api/mcp-todos'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
     | '/demo/api/ai/transcription'
-    | '/demo/api/ai/tts';
+    | '/demo/api/ai/tts'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/mcp'
+    | '/outbound'
     | '/api/resume-chat'
     | '/demo/ai-chat'
     | '/demo/ai-image'
@@ -307,211 +308,210 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/demo/valtio'
     | '/demo/zustand'
-    | '/outbound/'
     | '/demo/api/mcp-todos'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
     | '/demo/api/ai/transcription'
-    | '/demo/api/ai/tts';
-  fileRoutesById: FileRoutesById;
+    | '/demo/api/ai/tts'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  AboutRoute: typeof AboutRoute;
-  McpRoute: typeof McpRoute;
-  ApiResumeChatRoute: typeof ApiResumeChatRoute;
-  DemoAiChatRoute: typeof DemoAiChatRoute;
-  DemoAiImageRoute: typeof DemoAiImageRoute;
-  DemoAiStructuredRoute: typeof DemoAiStructuredRoute;
-  DemoContextRoute: typeof DemoContextRoute;
-  DemoDynamicListRoute: typeof DemoDynamicListRoute;
-  DemoInfiniteScrollRoute: typeof DemoInfiniteScrollRoute;
-  DemoMcpTodosRoute: typeof DemoMcpTodosRoute;
-  DemoMobxRoute: typeof DemoMobxRoute;
-  DemoMockRoute: typeof DemoMockRoute;
-  DemoReduxRoute: typeof DemoReduxRoute;
-  DemoStoreRoute: typeof DemoStoreRoute;
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute;
-  DemoValtioRoute: typeof DemoValtioRoute;
-  DemoZustandRoute: typeof DemoZustandRoute;
-  OutboundIndexRoute: typeof OutboundIndexRoute;
-  DemoApiMcpTodosRoute: typeof DemoApiMcpTodosRoute;
-  DemoApiAiImageRoute: typeof DemoApiAiImageRoute;
-  DemoApiAiStructuredRoute: typeof DemoApiAiStructuredRoute;
-  DemoApiAiTranscriptionRoute: typeof DemoApiAiTranscriptionRoute;
-  DemoApiAiTtsRoute: typeof DemoApiAiTtsRoute;
+  IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  McpRoute: typeof McpRoute
+  OutboundRoute: typeof OutboundRoute
+  ApiResumeChatRoute: typeof ApiResumeChatRoute
+  DemoAiChatRoute: typeof DemoAiChatRoute
+  DemoAiImageRoute: typeof DemoAiImageRoute
+  DemoAiStructuredRoute: typeof DemoAiStructuredRoute
+  DemoContextRoute: typeof DemoContextRoute
+  DemoDynamicListRoute: typeof DemoDynamicListRoute
+  DemoInfiniteScrollRoute: typeof DemoInfiniteScrollRoute
+  DemoMcpTodosRoute: typeof DemoMcpTodosRoute
+  DemoMobxRoute: typeof DemoMobxRoute
+  DemoMockRoute: typeof DemoMockRoute
+  DemoReduxRoute: typeof DemoReduxRoute
+  DemoStoreRoute: typeof DemoStoreRoute
+  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  DemoValtioRoute: typeof DemoValtioRoute
+  DemoZustandRoute: typeof DemoZustandRoute
+  DemoApiMcpTodosRoute: typeof DemoApiMcpTodosRoute
+  DemoApiAiImageRoute: typeof DemoApiAiImageRoute
+  DemoApiAiStructuredRoute: typeof DemoApiAiStructuredRoute
+  DemoApiAiTranscriptionRoute: typeof DemoApiAiTranscriptionRoute
+  DemoApiAiTtsRoute: typeof DemoApiAiTtsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/outbound': {
+      id: '/outbound'
+      path: '/outbound'
+      fullPath: '/outbound'
+      preLoaderRoute: typeof OutboundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mcp': {
-      id: '/mcp';
-      path: '/mcp';
-      fullPath: '/mcp';
-      preLoaderRoute: typeof McpRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
-      id: '/about';
-      path: '/about';
-      fullPath: '/about';
-      preLoaderRoute: typeof AboutRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
-      id: '/';
-      path: '/';
-      fullPath: '/';
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    '/outbound/': {
-      id: '/outbound/';
-      path: '/outbound';
-      fullPath: '/outbound/';
-      preLoaderRoute: typeof OutboundIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/zustand': {
-      id: '/demo/zustand';
-      path: '/demo/zustand';
-      fullPath: '/demo/zustand';
-      preLoaderRoute: typeof DemoZustandRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/zustand'
+      path: '/demo/zustand'
+      fullPath: '/demo/zustand'
+      preLoaderRoute: typeof DemoZustandRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/valtio': {
-      id: '/demo/valtio';
-      path: '/demo/valtio';
-      fullPath: '/demo/valtio';
-      preLoaderRoute: typeof DemoValtioRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/valtio'
+      path: '/demo/valtio'
+      fullPath: '/demo/valtio'
+      preLoaderRoute: typeof DemoValtioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/tanstack-query': {
-      id: '/demo/tanstack-query';
-      path: '/demo/tanstack-query';
-      fullPath: '/demo/tanstack-query';
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/tanstack-query'
+      path: '/demo/tanstack-query'
+      fullPath: '/demo/tanstack-query'
+      preLoaderRoute: typeof DemoTanstackQueryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/store': {
-      id: '/demo/store';
-      path: '/demo/store';
-      fullPath: '/demo/store';
-      preLoaderRoute: typeof DemoStoreRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/store'
+      path: '/demo/store'
+      fullPath: '/demo/store'
+      preLoaderRoute: typeof DemoStoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/redux': {
-      id: '/demo/redux';
-      path: '/demo/redux';
-      fullPath: '/demo/redux';
-      preLoaderRoute: typeof DemoReduxRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/redux'
+      path: '/demo/redux'
+      fullPath: '/demo/redux'
+      preLoaderRoute: typeof DemoReduxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/mock': {
-      id: '/demo/mock';
-      path: '/demo/mock';
-      fullPath: '/demo/mock';
-      preLoaderRoute: typeof DemoMockRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/mock'
+      path: '/demo/mock'
+      fullPath: '/demo/mock'
+      preLoaderRoute: typeof DemoMockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/mobx': {
-      id: '/demo/mobx';
-      path: '/demo/mobx';
-      fullPath: '/demo/mobx';
-      preLoaderRoute: typeof DemoMobxRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/mobx'
+      path: '/demo/mobx'
+      fullPath: '/demo/mobx'
+      preLoaderRoute: typeof DemoMobxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/mcp-todos': {
-      id: '/demo/mcp-todos';
-      path: '/demo/mcp-todos';
-      fullPath: '/demo/mcp-todos';
-      preLoaderRoute: typeof DemoMcpTodosRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/mcp-todos'
+      path: '/demo/mcp-todos'
+      fullPath: '/demo/mcp-todos'
+      preLoaderRoute: typeof DemoMcpTodosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/infinite-scroll': {
-      id: '/demo/infinite-scroll';
-      path: '/demo/infinite-scroll';
-      fullPath: '/demo/infinite-scroll';
-      preLoaderRoute: typeof DemoInfiniteScrollRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/infinite-scroll'
+      path: '/demo/infinite-scroll'
+      fullPath: '/demo/infinite-scroll'
+      preLoaderRoute: typeof DemoInfiniteScrollRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/dynamic-list': {
-      id: '/demo/dynamic-list';
-      path: '/demo/dynamic-list';
-      fullPath: '/demo/dynamic-list';
-      preLoaderRoute: typeof DemoDynamicListRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/dynamic-list'
+      path: '/demo/dynamic-list'
+      fullPath: '/demo/dynamic-list'
+      preLoaderRoute: typeof DemoDynamicListRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/context': {
-      id: '/demo/context';
-      path: '/demo/context';
-      fullPath: '/demo/context';
-      preLoaderRoute: typeof DemoContextRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/context'
+      path: '/demo/context'
+      fullPath: '/demo/context'
+      preLoaderRoute: typeof DemoContextRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/ai-structured': {
-      id: '/demo/ai-structured';
-      path: '/demo/ai-structured';
-      fullPath: '/demo/ai-structured';
-      preLoaderRoute: typeof DemoAiStructuredRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/ai-structured'
+      path: '/demo/ai-structured'
+      fullPath: '/demo/ai-structured'
+      preLoaderRoute: typeof DemoAiStructuredRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/ai-image': {
-      id: '/demo/ai-image';
-      path: '/demo/ai-image';
-      fullPath: '/demo/ai-image';
-      preLoaderRoute: typeof DemoAiImageRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/ai-image'
+      path: '/demo/ai-image'
+      fullPath: '/demo/ai-image'
+      preLoaderRoute: typeof DemoAiImageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/ai-chat': {
-      id: '/demo/ai-chat';
-      path: '/demo/ai-chat';
-      fullPath: '/demo/ai-chat';
-      preLoaderRoute: typeof DemoAiChatRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/ai-chat'
+      path: '/demo/ai-chat'
+      fullPath: '/demo/ai-chat'
+      preLoaderRoute: typeof DemoAiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/resume-chat': {
-      id: '/api/resume-chat';
-      path: '/api/resume-chat';
-      fullPath: '/api/resume-chat';
-      preLoaderRoute: typeof ApiResumeChatRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/api/resume-chat'
+      path: '/api/resume-chat'
+      fullPath: '/api/resume-chat'
+      preLoaderRoute: typeof ApiResumeChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/api/mcp-todos': {
-      id: '/demo/api/mcp-todos';
-      path: '/demo/api/mcp-todos';
-      fullPath: '/demo/api/mcp-todos';
-      preLoaderRoute: typeof DemoApiMcpTodosRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/api/mcp-todos'
+      path: '/demo/api/mcp-todos'
+      fullPath: '/demo/api/mcp-todos'
+      preLoaderRoute: typeof DemoApiMcpTodosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/api/ai/tts': {
-      id: '/demo/api/ai/tts';
-      path: '/demo/api/ai/tts';
-      fullPath: '/demo/api/ai/tts';
-      preLoaderRoute: typeof DemoApiAiTtsRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/api/ai/tts'
+      path: '/demo/api/ai/tts'
+      fullPath: '/demo/api/ai/tts'
+      preLoaderRoute: typeof DemoApiAiTtsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/api/ai/transcription': {
-      id: '/demo/api/ai/transcription';
-      path: '/demo/api/ai/transcription';
-      fullPath: '/demo/api/ai/transcription';
-      preLoaderRoute: typeof DemoApiAiTranscriptionRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/api/ai/transcription'
+      path: '/demo/api/ai/transcription'
+      fullPath: '/demo/api/ai/transcription'
+      preLoaderRoute: typeof DemoApiAiTranscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/api/ai/structured': {
-      id: '/demo/api/ai/structured';
-      path: '/demo/api/ai/structured';
-      fullPath: '/demo/api/ai/structured';
-      preLoaderRoute: typeof DemoApiAiStructuredRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/api/ai/structured'
+      path: '/demo/api/ai/structured'
+      fullPath: '/demo/api/ai/structured'
+      preLoaderRoute: typeof DemoApiAiStructuredRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/api/ai/image': {
-      id: '/demo/api/ai/image';
-      path: '/demo/api/ai/image';
-      fullPath: '/demo/api/ai/image';
-      preLoaderRoute: typeof DemoApiAiImageRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/demo/api/ai/image'
+      path: '/demo/api/ai/image'
+      fullPath: '/demo/api/ai/image'
+      preLoaderRoute: typeof DemoApiAiImageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -519,6 +519,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   McpRoute: McpRoute,
+  OutboundRoute: OutboundRoute,
   ApiResumeChatRoute: ApiResumeChatRoute,
   DemoAiChatRoute: DemoAiChatRoute,
   DemoAiImageRoute: DemoAiImageRoute,
@@ -534,22 +535,21 @@ const rootRouteChildren: RootRouteChildren = {
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   DemoValtioRoute: DemoValtioRoute,
   DemoZustandRoute: DemoZustandRoute,
-  OutboundIndexRoute: OutboundIndexRoute,
   DemoApiMcpTodosRoute: DemoApiMcpTodosRoute,
   DemoApiAiImageRoute: DemoApiAiImageRoute,
   DemoApiAiStructuredRoute: DemoApiAiStructuredRoute,
   DemoApiAiTranscriptionRoute: DemoApiAiTranscriptionRoute,
   DemoApiAiTtsRoute: DemoApiAiTtsRoute,
-};
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from './router.tsx';
-import type { createStart } from '@tanstack/react-start';
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
 declare module '@tanstack/react-start' {
   interface Register {
-    ssr: true;
-    router: Awaited<ReturnType<typeof getRouter>>;
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
   }
 }

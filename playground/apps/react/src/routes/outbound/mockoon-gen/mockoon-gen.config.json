@@ -1,0 +1,10 @@
+{
+  "mockoonPort": 6000,
+  "whistleGroupName": "outbound-local",
+  "mockPolicy": {
+    "listScenario": {
+      "enabled": true,
+      "itemCount": 20
+    }
+  }
+}
