@@ -2,9 +2,10 @@ import 'antd/dist/reset.css';
 
 import { createFileRoute } from '@tanstack/react-router';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Alert, Button, Card, Input, InputNumber, Select, Space, Spin, Statistic, Table, Typography, message } from 'antd';
+import { Alert, Button, Card, InputNumber, Select, Space, Spin, Statistic, Table, Typography, message } from 'antd';
 import { Plus, RefreshCw, Send, Trash2 } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useImmer, type Updater } from 'use-immer';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { fetchAvailableWarehouses, fetchOutboundOrder, submitOutboundOrder } from './outbound/-api';
 import {
@@ -28,10 +29,9 @@ const OUTBOUND_QUERY_KEY = ['outbound-order'];
 function OutboundRoute() {
   const queryClient = useQueryClient();
   const [messageApi, contextHolder] = message.useMessage();
-  const [rows, setRows] = useState<OutboundEditableRow[]>([]);
-  const [remark, setRemark] = useState('');
-  const [rowErrors, setRowErrors] = useState<Record<string, Record<string, string | undefined>>>({});
-  const [warehouseOptionsBySku, setWarehouseOptionsBySku] = useState<Record<string, AvailableWarehouse[]>>({});
+  const [rows, updateRows] = useImmer<OutboundEditableRow[]>([]);
+  const [rowErrors, updateRowErrors] = useImmer<Record<string, Record<string, string | undefined>>>({});
+  const [warehouseOptionsBySku, updateWarehouseOptionsBySku] = useImmer<Record<string, AvailableWarehouse[]>>({});
   const requestedSkuIdsRef = useRef<Set<string>>(new Set());
 
   const outboundQuery = useQuery({
@@ -40,15 +40,35 @@ function OutboundRoute() {
   });
 
   const resetEditorState = () => {
-    setRowErrors({});
-    setWarehouseOptionsBySku({});
+    updateRowErrors(() => ({}));
+    updateWarehouseOptionsBySku(() => ({}));
     requestedSkuIdsRef.current = new Set();
+  };
+
+  const ensureWarehouseOptions = async (skuId: string) => {
+    if (!skuId || requestedSkuIdsRef.current.has(skuId)) {
+      return;
+    }
+
+    requestedSkuIdsRef.current.add(skuId);
+    try {
+      const response = await fetchAvailableWarehouses(skuId);
+      updateWarehouseOptionsBySku((draft) => {
+        draft[skuId] = response.warehouses;
+      });
+    } catch (error) {
+      requestedSkuIdsRef.current.delete(skuId);
+      messageApi.error(error instanceof Error ? error.message : `Failed to load warehouses for ${skuId}`);
+    }
   };
 
   const hydrateFromOrder = (order: Awaited<ReturnType<typeof fetchOutboundOrder>>) => {
     resetEditorState();
-    setRows(flattenOutboundOrder(order));
-    setRemark(order.remark ?? '');
+    const nextRows = flattenOutboundOrder(order);
+    updateRows(() => nextRows);
+    nextRows.forEach((row) => {
+      void ensureWarehouseOptions(row.skuId);
+    });
   };
 
   useEffect(() => {
@@ -92,60 +112,39 @@ function OutboundRoute() {
     }
   };
 
-  const ensureWarehouseOptions = async (skuId: string) => {
-    if (!skuId || requestedSkuIdsRef.current.has(skuId)) {
-      return;
-    }
-
-    requestedSkuIdsRef.current.add(skuId);
-    try {
-      const response = await fetchAvailableWarehouses(skuId);
-      setWarehouseOptionsBySku((current) => ({ ...current, [skuId]: response.warehouses }));
-    } catch (error) {
-      requestedSkuIdsRef.current.delete(skuId);
-      messageApi.error(error instanceof Error ? error.message : `Failed to load warehouses for ${skuId}`);
-    }
-  };
-
-  useEffect(() => {
-    rows.forEach((row) => {
-      void ensureWarehouseOptions(row.skuId);
-    });
-  }, [rows]);
-
   const handleWarehouseChange = (rowId: string, warehouseId: string | undefined) => {
-    setRows((current) =>
-      current.map((row) => (row.id === rowId ? { ...row, warehouseId, outboundQty: row.outboundQty } : row)),
-    );
-    clearRowError(rowId, 'warehouseId', setRowErrors);
+    updateRows((draft) => {
+      const row = draft.find((candidate) => candidate.id === rowId);
+      if (row) {
+        row.warehouseId = warehouseId;
+      }
+    });
+    clearRowError(rowId, 'warehouseId', updateRowErrors);
   };
 
   const handleQtyChange = (rowId: string, outboundQty: number | null) => {
-    setRows((current) =>
-      current.map((row) => (row.id === rowId ? { ...row, outboundQty: outboundQty ?? undefined } : row)),
-    );
-    clearRowError(rowId, 'outboundQty', setRowErrors);
-  };
-
-  const handleRemarkChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setRemark(event.target.value);
+    updateRows((draft) => {
+      const row = draft.find((candidate) => candidate.id === rowId);
+      if (row) {
+        row.outboundQty = outboundQty ?? undefined;
+      }
+    });
+    clearRowError(rowId, 'outboundQty', updateRowErrors);
   };
 
   const handleAddWarehouse = (rowId: string) => {
-    setRows((current) => {
-      const index = current.findIndex((row) => row.id === rowId);
+    updateRows((draft) => {
+      const index = draft.findIndex((row) => row.id === rowId);
       if (index === -1) {
-        return current;
+        return;
       }
 
-      const anchor = current[index];
-      const nextRows = [...current];
-      nextRows.splice(index + 1, 0, {
+      const anchor = draft[index];
+      draft.splice(index + 1, 0, {
         id: createClientRowId(),
         skuId: anchor.skuId,
         waybillNo: anchor.waybillNo,
       });
-      return nextRows;
     });
   };
 
@@ -155,24 +154,27 @@ function OutboundRoute() {
       return;
     }
 
-    setRows((current) => current.filter((row) => row.id !== rowId));
-    setRowErrors((current) => {
-      const next = { ...current };
-      delete next[rowId];
-      return next;
+    updateRows((draft) => {
+      const index = draft.findIndex((row) => row.id === rowId);
+      if (index !== -1) {
+        draft.splice(index, 1);
+      }
+    });
+    updateRowErrors((draft) => {
+      delete draft[rowId];
     });
   };
 
   const handleSubmit = () => {
     const validation = validateRows(rows, warehouseOptionsBySku);
-    setRowErrors(validation.rowErrors);
+    updateRowErrors(() => validation.rowErrors);
 
     if (!validation.isValid) {
       messageApi.error('Please fix validation errors before submitting');
       return;
     }
 
-    submitMutation.mutate(buildSubmitPayload(rows, remark));
+    submitMutation.mutate(buildSubmitPayload(rows));
   };
 
   const columns = useMemo(
@@ -225,14 +227,6 @@ function OutboundRoute() {
 
         <Card>
           <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-            <Input.TextArea
-              value={remark}
-              onChange={handleRemarkChange}
-              rows={3}
-              placeholder="Remark"
-              maxLength={200}
-            />
-
             {outboundQuery.isLoading ? (
               <div className="flex justify-center py-12">
                 <Spin />
@@ -428,16 +422,15 @@ function FieldError({
 function clearRowError(
   rowId: string,
   field: string,
-  setRowErrors: React.Dispatch<React.SetStateAction<Record<string, Record<string, string | undefined>>>>,
+  updateRowErrors: Updater<Record<string, Record<string, string | undefined>>>,
 ) {
-  setRowErrors((current) => {
-    const rowError = current[rowId];
+  updateRowErrors((draft) => {
+    const rowError = draft[rowId];
     if (!rowError?.[field]) {
-      return current;
+      return;
     }
 
-    const nextRowError = { ...rowError, [field]: undefined };
-    return { ...current, [rowId]: nextRowError };
+    rowError[field] = undefined;
   });
 }
 

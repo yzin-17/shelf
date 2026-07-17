@@ -15,7 +15,6 @@ const sampleOrder: OutboundOrderResponse = {
   orderId: '90001',
   orderNo: 'OUT202607140001',
   status: 'DRAFT',
-  remark: 'sample',
   items: [
     {
       skuId: 'SKU001',
@@ -132,11 +131,10 @@ test('validateRows rejects quantity above available stock', () => {
 });
 
 test('buildSubmitPayload groups rows by sku and waybill', () => {
-  const payload = buildSubmitPayload(flattenOutboundOrder(sampleOrder), ' ship today ');
+  const payload = buildSubmitPayload(flattenOutboundOrder(sampleOrder));
 
   assert.deepEqual(payload, {
     action: 'SUBMIT',
-    remark: 'ship today',
     items: [
       {
         skuId: 'SKU001',

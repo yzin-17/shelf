@@ -22,14 +22,12 @@ export type OutboundItem = {
 export type OutboundOrderResponse = {
   orderId: string;
   orderNo: string;
-  remark?: string;
   status: 'DRAFT' | 'SUBMITTED';
   items: OutboundItem[];
 };
 
 export type OutboundSubmitPayload = {
   action: 'SUBMIT';
-  remark?: string;
   items: OutboundItem[];
 };
 
@@ -118,7 +116,7 @@ export function computeStats(rows: OutboundEditableRow[]): TableStats {
   };
 }
 
-export function buildSubmitPayload(rows: OutboundEditableRow[], remark?: string): OutboundSubmitPayload {
+export function buildSubmitPayload(rows: OutboundEditableRow[]): OutboundSubmitPayload {
   const items: OutboundItem[] = [];
 
   rows.forEach((row) => {
@@ -142,7 +140,6 @@ export function buildSubmitPayload(rows: OutboundEditableRow[], remark?: string)
 
   return {
     action: 'SUBMIT',
-    remark: normalizeRemark(remark),
     items,
   };
 }
@@ -249,9 +246,4 @@ function countContiguous(
     count += 1;
   }
   return count;
-}
-
-function normalizeRemark(remark?: string): string | undefined {
-  const value = remark?.trim();
-  return value ? value : undefined;
 }

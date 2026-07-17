@@ -200,6 +200,9 @@ importers:
       zustand:
         specifier: ^5.0.12
         version: 5.0.12(@types/react@19.2.14)(immer@11.1.4)(react@19.2.5)(use-sync-external-store@1.6.0(react@19.2.5))
+      use-immer:
+        specifier: ^0.11.0
+        version: 0.11.0(immer@11.1.4)(react@19.2.5)
     devDependencies:
       '@content-collections/core':
         specifier: ^0.15.0
@@ -4804,6 +4807,12 @@ packages:
 
   immer@11.1.4:
     resolution: {integrity: sha512-XREFCPo6ksxVzP4E0ekD5aMdf8WMwmdNaz6vuvxgI40UaEiu6q3p8X52aU6GdyvLY3XXX/8R7JOTXStz/nBbRw==}
+
+  use-immer@0.11.0:
+    resolution: {integrity: sha512-RNAqi3GqsWJ4bcCd4LMBgdzvPmTABam24DUaFiKfX9s3MSorNRz9RDZYJkllJoMHUxVLMDetwAuCDeyWNrp1yA==}
+    peerDependencies:
+      immer: '>=8.0.0'
+      react: ^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0
 
   import-local@3.2.0:
     resolution: {integrity: sha512-2SPlun1JUPWoM6t3F0dw0FkCF/jWY8kttcY4f599GLTSjh2OCuuhdTkJQsEcZzBqbXZGKMK2OqW1oZsjtf/gQA==}
@@ -11384,6 +11393,11 @@ snapshots:
       postcss: 8.5.10
 
   immer@11.1.4: {}
+
+  use-immer@0.11.0(immer@11.1.4)(react@19.2.5):
+    dependencies:
+      immer: 11.1.4
+      react: 19.2.5
 
   import-local@3.2.0:
     dependencies:
