@@ -1,11 +1,19 @@
 export type AvailableWarehouse = {
   warehouseId: string;
   warehouseName: string;
+  isBatch: boolean;
+  availableQty: number;
+  batches: AvailableWarehouseBatch[];
+};
+
+export type AvailableWarehouseBatch = {
+  batchDate: number;
   availableQty: number;
 };
 
 export type OutboundAllocation = {
   warehouseId: string;
+  batchDate?: number;
   outboundQty: number;
 };
 
@@ -36,6 +44,7 @@ export type OutboundEditableRow = {
   skuId: string;
   waybillNo: string;
   warehouseId?: string;
+  batchDate?: number;
   outboundQty?: number;
 };
 
@@ -48,6 +57,7 @@ export type RowValidation = {
   skuId?: string;
   waybillNo?: string;
   warehouseId?: string;
+  batchDate?: string;
   outboundQty?: string;
 };
 
@@ -68,13 +78,17 @@ export function flattenOutboundOrder(order: OutboundOrderResponse): OutboundEdit
   order.items.forEach((item, itemIndex) => {
     item.waybills.forEach((waybill, waybillIndex) => {
       waybill.allocations.forEach((allocation, allocationIndex) => {
-        rows.push({
+        const row: OutboundEditableRow = {
           id: buildRowId(item.skuId, waybill.waybillNo, allocation.warehouseId, allocationIndex),
           skuId: item.skuId,
           waybillNo: waybill.waybillNo,
           warehouseId: allocation.warehouseId,
           outboundQty: allocation.outboundQty,
-        });
+        };
+        if (allocation.batchDate != null) {
+          row.batchDate = allocation.batchDate;
+        }
+        rows.push(row);
       });
 
       if (waybill.allocations.length === 0) {
@@ -93,7 +107,9 @@ export function flattenOutboundOrder(order: OutboundOrderResponse): OutboundEdit
 export function computeDisplayRows(rows: OutboundEditableRow[]): OutboundDisplayRow[] {
   return rows.map((row, index) => ({
     ...row,
-    skuRowSpan: isFirstSkuRow(rows, index) ? countContiguous(rows, index, (candidate) => candidate.skuId === row.skuId) : 0,
+    skuRowSpan: isFirstSkuRow(rows, index)
+      ? countContiguous(rows, index, (candidate) => candidate.skuId === row.skuId)
+      : 0,
     waybillRowSpan: isFirstWaybillRow(rows, index)
       ? countContiguous(
           rows,
@@ -132,10 +148,14 @@ export function buildSubmitPayload(rows: OutboundEditableRow[]): OutboundSubmitP
       item.waybills.push(waybill);
     }
 
-    waybill.allocations.push({
+    const allocation: OutboundAllocation = {
       warehouseId: row.warehouseId ?? '',
       outboundQty: row.outboundQty ?? 0,
-    });
+    };
+    if (row.batchDate != null) {
+      allocation.batchDate = row.batchDate;
+    }
+    waybill.allocations.push(allocation);
   });
 
   return {
@@ -153,7 +173,7 @@ export function validateRows(
 
   rows.forEach((row) => {
     if (row.skuId && row.waybillNo && row.warehouseId) {
-      const duplicateKey = `${row.skuId}::${row.waybillNo}::${row.warehouseId}`;
+      const duplicateKey = buildAllocationKey(row);
       duplicateCounter.set(duplicateKey, (duplicateCounter.get(duplicateKey) ?? 0) + 1);
     }
   });
@@ -173,6 +193,15 @@ export function validateRows(
       errors.warehouseId = 'Warehouse is required';
     }
 
+    const warehouse = row.warehouseId
+      ? warehouseOptionsBySku[row.skuId]?.find(
+          (candidate) => candidate.warehouseId === row.warehouseId,
+        )
+      : undefined;
+    if (warehouse?.isBatch && row.batchDate == null) {
+      errors.batchDate = 'Batch date is required';
+    }
+
     if (row.outboundQty == null) {
       errors.outboundQty = 'Outbound quantity is required';
     } else if (row.outboundQty <= 0) {
@@ -180,16 +209,14 @@ export function validateRows(
     }
 
     if (row.warehouseId) {
-      const duplicateKey = `${row.skuId}::${row.waybillNo}::${row.warehouseId}`;
+      const duplicateKey = buildAllocationKey(row);
       if ((duplicateCounter.get(duplicateKey) ?? 0) > 1) {
         errors.warehouseId = 'Warehouse already exists for this SKU and waybill';
       }
 
-      const warehouse = warehouseOptionsBySku[row.skuId]?.find(
-        (candidate) => candidate.warehouseId === row.warehouseId,
-      );
-      if (warehouse && row.outboundQty != null && row.outboundQty > warehouse.availableQty) {
-        errors.outboundQty = `Outbound quantity cannot exceed available quantity (${warehouse.availableQty})`;
+      const availableQty = getAvailableQty(warehouse, row.batchDate);
+      if (availableQty != null && row.outboundQty != null && row.outboundQty > availableQty) {
+        errors.outboundQty = `Outbound quantity cannot exceed available quantity (${availableQty})`;
       }
     }
 
@@ -202,6 +229,27 @@ export function validateRows(
     rowErrors,
     isValid: Object.keys(rowErrors).length === 0,
   };
+}
+
+export function getAvailableQty(
+  warehouse: AvailableWarehouse | undefined,
+  batchDate?: number,
+): number | undefined {
+  if (!warehouse) {
+    return undefined;
+  }
+  if (!warehouse.isBatch) {
+    return warehouse.availableQty;
+  }
+  return warehouse.batches.find((batch) => batch.batchDate === batchDate)?.availableQty;
+}
+
+export function formatBatchDate(batchDate: number): string {
+  const date = new Date(batchDate);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 export function canDeleteWaybillRow(rows: OutboundEditableRow[], rowId: string): boolean {
@@ -219,6 +267,10 @@ export function canDeleteWaybillRow(rows: OutboundEditableRow[], rowId: string):
 
 function buildRowId(skuId: string, waybillNo: string, warehouseId: string, index: number): string {
   return `${skuId}::${waybillNo}::${warehouseId}::${index}`;
+}
+
+function buildAllocationKey(row: OutboundEditableRow): string {
+  return `${row.skuId}::${row.waybillNo}::${row.warehouseId}::${row.batchDate ?? ''}`;
 }
 
 function isFirstSkuRow(rows: OutboundEditableRow[], index: number): boolean {

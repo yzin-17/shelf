@@ -6,6 +6,7 @@ import {
   canDeleteWaybillRow,
   computeDisplayRows,
   computeStats,
+  formatBatchDate,
   flattenOutboundOrder,
   validateRows,
   type OutboundOrderResponse,
@@ -99,12 +100,26 @@ test('validateRows rejects duplicate warehouse in same sku and waybill', () => {
   ];
 
   const validation = validateRows(rows, {
-    SKU001: [{ warehouseId: 'WH001', warehouseName: 'Shanghai', availableQty: 20 }],
+    SKU001: [
+      {
+        warehouseId: 'WH001',
+        warehouseName: 'Shanghai',
+        isBatch: false,
+        availableQty: 20,
+        batches: [],
+      },
+    ],
   });
 
   assert.equal(validation.isValid, false);
-  assert.equal(validation.rowErrors['1']?.warehouseId, 'Warehouse already exists for this SKU and waybill');
-  assert.equal(validation.rowErrors['2']?.warehouseId, 'Warehouse already exists for this SKU and waybill');
+  assert.equal(
+    validation.rowErrors['1']?.warehouseId,
+    'Warehouse already exists for this SKU and waybill',
+  );
+  assert.equal(
+    validation.rowErrors['2']?.warehouseId,
+    'Warehouse already exists for this SKU and waybill',
+  );
 });
 
 test('validateRows rejects quantity above available stock', () => {
@@ -119,7 +134,15 @@ test('validateRows rejects quantity above available stock', () => {
       },
     ],
     {
-      SKU001: [{ warehouseId: 'WH001', warehouseName: 'Shanghai', availableQty: 20 }],
+      SKU001: [
+        {
+          warehouseId: 'WH001',
+          warehouseName: 'Shanghai',
+          isBatch: false,
+          availableQty: 20,
+          batches: [],
+        },
+      ],
     },
   );
 
@@ -170,4 +193,81 @@ test('canDeleteWaybillRow prevents deleting the last warehouse row under a waybi
 
   assert.equal(canDeleteWaybillRow(rows, rows[0].id), true);
   assert.equal(canDeleteWaybillRow(rows, rows[2].id), false);
+});
+
+test('batch allocations preserve timestamp and allow the same warehouse across batches', () => {
+  const rows = [
+    {
+      id: '1',
+      skuId: 'SKU001',
+      waybillNo: 'WB001',
+      warehouseId: 'WH001',
+      batchDate: 1764547200000,
+      outboundQty: 10,
+    },
+    {
+      id: '2',
+      skuId: 'SKU001',
+      waybillNo: 'WB001',
+      warehouseId: 'WH001',
+      batchDate: 1764633600000,
+      outboundQty: 8,
+    },
+  ];
+  const warehouseOptions = {
+    SKU001: [
+      {
+        warehouseId: 'WH001',
+        warehouseName: 'Shanghai',
+        isBatch: true,
+        availableQty: 0,
+        batches: [
+          { batchDate: 1764547200000, availableQty: 10 },
+          { batchDate: 1764633600000, availableQty: 8 },
+        ],
+      },
+    ],
+  };
+
+  assert.equal(validateRows(rows, warehouseOptions).isValid, true);
+  assert.deepEqual(buildSubmitPayload(rows).items[0]?.waybills[0]?.allocations, [
+    { warehouseId: 'WH001', batchDate: 1764547200000, outboundQty: 10 },
+    { warehouseId: 'WH001', batchDate: 1764633600000, outboundQty: 8 },
+  ]);
+});
+
+test('batch quantity validation uses the selected batch available quantity', () => {
+  const validation = validateRows(
+    [
+      {
+        id: '1',
+        skuId: 'SKU001',
+        waybillNo: 'WB001',
+        warehouseId: 'WH001',
+        batchDate: 1764547200000,
+        outboundQty: 11,
+      },
+    ],
+    {
+      SKU001: [
+        {
+          warehouseId: 'WH001',
+          warehouseName: 'Shanghai',
+          isBatch: true,
+          availableQty: 0,
+          batches: [{ batchDate: 1764547200000, availableQty: 10 }],
+        },
+      ],
+    },
+  );
+
+  assert.equal(validation.isValid, false);
+  assert.equal(
+    validation.rowErrors['1']?.outboundQty,
+    'Outbound quantity cannot exceed available quantity (10)',
+  );
+});
+
+test('formatBatchDate renders a timestamp as a date string', () => {
+  assert.match(formatBatchDate(1764547200000), /^2025-12-01$/);
 });

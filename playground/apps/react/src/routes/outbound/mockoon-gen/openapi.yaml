@@ -30,6 +30,7 @@ paths:
                           - waybillNo: WB20260714001
                             allocations:
                               - warehouseId: WH001
+                                batchDate: 1764547200000
                                 outboundQty: 12
                               - warehouseId: WH002
                                 outboundQty: 8
@@ -63,6 +64,7 @@ paths:
                         - waybillNo: WB20260714001
                           allocations:
                             - warehouseId: WH001
+                              batchDate: 1764547200000
                               outboundQty: 12
                             - warehouseId: WH002
                               outboundQty: 8
@@ -108,13 +110,23 @@ paths:
                     warehouses:
                       - warehouseId: WH001
                         warehouseName: Shanghai Warehouse
+                        isBatch: true
                         availableQty: 20
+                        batches:
+                          - batchDate: 1764547200000
+                            availableQty: 12
+                          - batchDate: 1764633600000
+                            availableQty: 8
                       - warehouseId: WH002
                         warehouseName: Guangzhou Warehouse
+                        isBatch: false
                         availableQty: 15
+                        batches: []
                       - warehouseId: WH003
                         warehouseName: Chengdu Warehouse
+                        isBatch: false
                         availableQty: 5
+                        batches: []
 components:
   schemas:
     OutboundAllocation:
@@ -125,6 +137,9 @@ components:
       properties:
         warehouseId:
           type: string
+        batchDate:
+          type: integer
+          format: int64
         outboundQty:
           type: integer
           minimum: 1
@@ -211,12 +226,32 @@ components:
       required:
         - warehouseId
         - warehouseName
+        - isBatch
         - availableQty
+        - batches
       properties:
         warehouseId:
           type: string
         warehouseName:
           type: string
+        isBatch:
+          type: boolean
+        availableQty:
+          type: integer
+          minimum: 0
+        batches:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableWarehouseBatch'
+    AvailableWarehouseBatch:
+      type: object
+      required:
+        - batchDate
+        - availableQty
+      properties:
+        batchDate:
+          type: integer
+          format: int64
         availableQty:
           type: integer
           minimum: 0

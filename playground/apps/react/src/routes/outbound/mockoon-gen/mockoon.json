@@ -1,5 +1,5 @@
 {
-  "uuid": "34ab8f42-ff2c-4980-83ff-c7e4a11d4920",
+  "uuid": "7d0b43db-044b-4e4f-b101-f09eb46dd2ce",
   "lastMigration": 33,
   "name": "mockoon-gen",
   "endpointPrefix": "",
@@ -7,13 +7,13 @@
   "port": 6000,
   "routes": [
     {
-      "uuid": "3b1a4f92-2f74-4535-b5bb-dcc68691f061",
+      "uuid": "887a505a-af7d-4d3b-99d8-fc142c745b29",
       "method": "get",
       "endpoint": "api/outbound-orders",
       "responses": [
         {
-          "uuid": "97dc641a-4b77-43b7-b4db-ad9a1ace87c8",
-          "body": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": [{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"waybills\": [{\n  \"waybillNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"allocations\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"outboundQty\": {{faker 'number.int' min=1 max=9007199254740991}}\n}]\n}]\n}]\n}",
+          "uuid": "b1b76993-fe8f-4f08-9090-cfc3e5a7d2b6",
+          "body": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": [{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"waybills\": [{\n  \"waybillNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"allocations\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"batchDate\": {{faker 'number.int' min=0 max=1893456000000}},\n  \"outboundQty\": {{faker 'number.int' min=1 max=9007199254740991}}\n}]\n}]\n}]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "success-default",
@@ -36,8 +36,8 @@
           "callbacks": []
         },
         {
-          "uuid": "ff9ce846-9030-4c4b-89ef-2cb99fb045f9",
-          "body": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": [{{#repeat 20}}{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"waybills\": [{\n  \"waybillNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"allocations\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"outboundQty\": {{faker 'number.int' min=1 max=9007199254740991}}\n}]\n}]\n}{{/repeat}}]\n}",
+          "uuid": "a393205f-b807-4299-8a20-999c52427faa",
+          "body": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": [{{#repeat 20}}{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"waybills\": [{\n  \"waybillNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"allocations\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"batchDate\": {{faker 'number.int' min=0 max=1893456000000}},\n  \"outboundQty\": {{faker 'number.int' min=1 max=9007199254740991}}\n}]\n}]\n}{{/repeat}}]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "success-list-20",
@@ -55,12 +55,36 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": true,
+          "default": false,
           "crudKey": "id",
           "callbacks": []
         },
         {
-          "uuid": "a3a7e3b3-bd37-4c07-bdf9-25d951a8aea3",
+          "uuid": "2a5b6fdf-f5b1-4d02-b961-74902f04fb24",
+          "body": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"orderId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"orderNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"status\": {{#if (boolean)}}null{{else}}\"DRAFT\"{{/if}},\n  \"remark\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'lorem.sentence'}}\"{{/if}}{{/if}},\n  \"items\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"skuId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"waybills\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"waybillNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"allocations\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"warehouseId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"batchDate\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=1893456000000}}{{/if}},\n  \"outboundQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=1 max=9007199254740991}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "success-random-empty",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "902d63f4-88d5-4743-98db-edb0924b2aad",
           "body": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": []\n}",
           "latency": 0,
           "statusCode": 200,
@@ -84,35 +108,11 @@
           "callbacks": []
         },
         {
-          "uuid": "d48ba9f8-6716-4088-b48c-1fce6f547b6a",
+          "uuid": "f5f24373-91fc-473e-8852-20e9be9d9290",
           "body": "{\n  \"code\": \"MOCK_ERROR\"\n}",
           "latency": 0,
           "statusCode": 500,
           "label": "error-default",
-          "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            }
-          ],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": false,
-          "crudKey": "id",
-          "callbacks": []
-        },
-        {
-          "uuid": "0e5591ab-66e9-4d63-977d-d3e2e21d2f2a",
-          "body": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"orderId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"orderNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"status\": {{#if (boolean)}}null{{else}}\"DRAFT\"{{/if}},\n  \"remark\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'lorem.sentence'}}\"{{/if}}{{/if}},\n  \"items\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"skuId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"waybills\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"waybillNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"allocations\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"warehouseId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"outboundQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=1 max=9007199254740991}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "success-random-empty",
           "headers": [
             {
               "key": "Content-Type",
@@ -139,12 +139,12 @@
       "responseMode": null
     },
     {
-      "uuid": "7246e441-58a9-4e00-bcdc-0c8ffd6dcd08",
+      "uuid": "23d12f0f-9acc-478e-90c4-6c7fa7e4a70f",
       "method": "post",
       "endpoint": "api/outbound-orders",
       "responses": [
         {
-          "uuid": "ffe00ab1-d9c1-4182-b4b3-3c6fe1d738a8",
+          "uuid": "db43de4a-6159-432d-bebd-051753e99357",
           "body": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"SUBMITTED\"\n}",
           "latency": 0,
           "statusCode": 200,
@@ -168,7 +168,31 @@
           "callbacks": []
         },
         {
-          "uuid": "57f3ce9e-8a4e-4de4-9418-830a995e74a4",
+          "uuid": "38138a31-9975-4b1d-adba-1b581b98961f",
+          "body": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"orderId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"orderNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"status\": {{#if (boolean)}}null{{else}}\"SUBMITTED\"{{/if}}\n}{{/if}}{{/if}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "success-random-empty",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "187043e4-fd7a-4f60-8c6e-01ef36a0f722",
           "body": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"SUBMITTED\"\n}",
           "latency": 0,
           "statusCode": 200,
@@ -192,35 +216,11 @@
           "callbacks": []
         },
         {
-          "uuid": "30529b21-6cc4-4148-8631-dac5b7c4f664",
+          "uuid": "ac68aa55-528b-4364-bddd-23a023c6dd53",
           "body": "{\n  \"code\": \"MOCK_ERROR\"\n}",
           "latency": 0,
           "statusCode": 500,
           "label": "error-default",
-          "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            }
-          ],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": false,
-          "crudKey": "id",
-          "callbacks": []
-        },
-        {
-          "uuid": "5032d558-6df0-425e-8ee6-d89f81c93c9d",
-          "body": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"orderId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"orderNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"status\": {{#if (boolean)}}null{{else}}\"SUBMITTED\"{{/if}}\n}{{/if}}{{/if}}",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "success-random-empty",
           "headers": [
             {
               "key": "Content-Type",
@@ -247,13 +247,13 @@
       "responseMode": null
     },
     {
-      "uuid": "624b9d33-9ab9-4d49-8556-b5491394d614",
+      "uuid": "cdba94da-a1f8-41b5-af35-9a695f775b7f",
       "method": "get",
       "endpoint": "api/skus/:skuId/available-warehouses",
       "responses": [
         {
-          "uuid": "6260c878-b429-4ded-ac8f-cf7ae108bb65",
-          "body": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouseName\": \"{{faker 'location.city'}}\",\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}}\n}]\n}",
+          "uuid": "89cfc6d2-1054-43ba-b8b6-12c571bc6be8",
+          "body": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouseName\": \"{{faker 'location.city'}}\",\n  \"isBatch\": {{faker 'datatype.boolean'}},\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}},\n  \"batches\": [{\n  \"batchDate\": {{faker 'number.int' min=0 max=1893456000000}},\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}}\n}]\n}]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "success-default",
@@ -276,8 +276,8 @@
           "callbacks": []
         },
         {
-          "uuid": "7ae4f077-adb5-45d0-97b1-385585698e3a",
-          "body": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": [{{#repeat 20}}{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouseName\": \"{{faker 'location.city'}}\",\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}}\n}{{/repeat}}]\n}",
+          "uuid": "fe9cb6dc-ea6f-445f-bf3e-ecf177ab5d91",
+          "body": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": [{{#repeat 20}}{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouseName\": \"{{faker 'location.city'}}\",\n  \"isBatch\": {{faker 'datatype.boolean'}},\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}},\n  \"batches\": [{\n  \"batchDate\": {{faker 'number.int' min=0 max=1893456000000}},\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}}\n}]\n}{{/repeat}}]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "success-list-20",
@@ -300,7 +300,31 @@
           "callbacks": []
         },
         {
-          "uuid": "14f8bae9-d032-48d4-991b-a3064c471016",
+          "uuid": "99d76e76-30ee-4d6e-a8d4-d0b1ba37aedd",
+          "body": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"skuId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"warehouses\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"warehouseId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"warehouseName\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'location.city'}}\"{{/if}}{{/if}},\n  \"isBatch\": {{#if (boolean)}}null{{else}}{{faker 'datatype.boolean'}}{{/if}},\n  \"availableQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=9007199254740991}}{{/if}},\n  \"batches\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"batchDate\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=1893456000000}}{{/if}},\n  \"availableQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=9007199254740991}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "success-random-empty",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "8c512ee1-d2b6-436a-9328-31ba3da9d569",
           "body": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": []\n}",
           "latency": 0,
           "statusCode": 200,
@@ -324,35 +348,11 @@
           "callbacks": []
         },
         {
-          "uuid": "7bd5b75b-586f-4573-997b-a7069de08402",
+          "uuid": "83385354-f379-43ba-beee-2214b28bc412",
           "body": "{\n  \"code\": \"MOCK_ERROR\"\n}",
           "latency": 0,
           "statusCode": 500,
           "label": "error-default",
-          "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            }
-          ],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": false,
-          "crudKey": "id",
-          "callbacks": []
-        },
-        {
-          "uuid": "b5844ff6-19fd-42b9-8a46-a3a55da764a0",
-          "body": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"skuId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"warehouses\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"warehouseId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"warehouseName\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'location.city'}}\"{{/if}}{{/if}},\n  \"availableQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=9007199254740991}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "success-random-empty",
           "headers": [
             {
               "key": "Content-Type",
@@ -383,15 +383,15 @@
   "rootChildren": [
     {
       "type": "route",
-      "uuid": "3b1a4f92-2f74-4535-b5bb-dcc68691f061"
+      "uuid": "887a505a-af7d-4d3b-99d8-fc142c745b29"
     },
     {
       "type": "route",
-      "uuid": "7246e441-58a9-4e00-bcdc-0c8ffd6dcd08"
+      "uuid": "23d12f0f-9acc-478e-90c4-6c7fa7e4a70f"
     },
     {
       "type": "route",
-      "uuid": "624b9d33-9ab9-4d49-8556-b5491394d614"
+      "uuid": "cdba94da-a1f8-41b5-af35-9a695f775b7f"
     }
   ],
   "folders": [],

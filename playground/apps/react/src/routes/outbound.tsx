@@ -2,7 +2,19 @@ import 'antd/dist/reset.css';
 
 import { createFileRoute } from '@tanstack/react-router';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Alert, Button, Card, InputNumber, Select, Space, Spin, Statistic, Table, Typography, message } from 'antd';
+import {
+  Alert,
+  Button,
+  Card,
+  InputNumber,
+  Select,
+  Space,
+  Spin,
+  Statistic,
+  Table,
+  Typography,
+  message,
+} from 'antd';
 import { Plus, RefreshCw, Send, Trash2 } from 'lucide-react';
 import { useImmer, type Updater } from 'use-immer';
 import { useEffect, useMemo, useRef } from 'react';
@@ -14,6 +26,8 @@ import {
   computeDisplayRows,
   computeStats,
   flattenOutboundOrder,
+  formatBatchDate,
+  getAvailableQty,
   validateRows,
   type AvailableWarehouse,
   type OutboundDisplayRow,
@@ -30,8 +44,12 @@ function OutboundRoute() {
   const queryClient = useQueryClient();
   const [messageApi, contextHolder] = message.useMessage();
   const [rows, updateRows] = useImmer<OutboundEditableRow[]>([]);
-  const [rowErrors, updateRowErrors] = useImmer<Record<string, Record<string, string | undefined>>>({});
-  const [warehouseOptionsBySku, updateWarehouseOptionsBySku] = useImmer<Record<string, AvailableWarehouse[]>>({});
+  const [rowErrors, updateRowErrors] = useImmer<Record<string, Record<string, string | undefined>>>(
+    {},
+  );
+  const [warehouseOptionsBySku, updateWarehouseOptionsBySku] = useImmer<
+    Record<string, AvailableWarehouse[]>
+  >({});
   const requestedSkuIdsRef = useRef<Set<string>>(new Set());
 
   const outboundQuery = useQuery({
@@ -58,7 +76,9 @@ function OutboundRoute() {
       });
     } catch (error) {
       requestedSkuIdsRef.current.delete(skuId);
-      messageApi.error(error instanceof Error ? error.message : `Failed to load warehouses for ${skuId}`);
+      messageApi.error(
+        error instanceof Error ? error.message : `Failed to load warehouses for ${skuId}`,
+      );
     }
   };
 
@@ -117,9 +137,25 @@ function OutboundRoute() {
       const row = draft.find((candidate) => candidate.id === rowId);
       if (row) {
         row.warehouseId = warehouseId;
+        row.batchDate = undefined;
+        row.outboundQty = undefined;
       }
     });
     clearRowError(rowId, 'warehouseId', updateRowErrors);
+    clearRowError(rowId, 'batchDate', updateRowErrors);
+    clearRowError(rowId, 'outboundQty', updateRowErrors);
+  };
+
+  const handleBatchChange = (rowId: string, batchDate: number | undefined) => {
+    updateRows((draft) => {
+      const row = draft.find((candidate) => candidate.id === rowId);
+      if (row) {
+        row.batchDate = batchDate;
+        row.outboundQty = undefined;
+      }
+    });
+    clearRowError(rowId, 'batchDate', updateRowErrors);
+    clearRowError(rowId, 'outboundQty', updateRowErrors);
   };
 
   const handleQtyChange = (rowId: string, outboundQty: number | null) => {
@@ -178,18 +214,20 @@ function OutboundRoute() {
   };
 
   const columns = useMemo(
-    () => buildColumns({
-      rowErrors,
-      warehouseOptionsBySku,
-      onWarehouseFocus: ensureWarehouseOptions,
-      onWarehouseChange: handleWarehouseChange,
-      onQtyChange: handleQtyChange,
-      onAddWarehouse: handleAddWarehouse,
-      onDeleteRow: handleDeleteRow,
-      canDeleteRow: (rowId) => canDeleteWaybillRow(rows, rowId),
-      onSubmit: handleSubmit,
-      submitting: submitMutation.isPending,
-    }),
+    () =>
+      buildColumns({
+        rowErrors,
+        warehouseOptionsBySku,
+        onWarehouseFocus: ensureWarehouseOptions,
+        onWarehouseChange: handleWarehouseChange,
+        onBatchChange: handleBatchChange,
+        onQtyChange: handleQtyChange,
+        onAddWarehouse: handleAddWarehouse,
+        onDeleteRow: handleDeleteRow,
+        canDeleteRow: (rowId) => canDeleteWaybillRow(rows, rowId),
+        onSubmit: handleSubmit,
+        submitting: submitMutation.isPending,
+      }),
     [rowErrors, warehouseOptionsBySku, submitMutation.isPending, rows],
   );
 
@@ -204,7 +242,8 @@ function OutboundRoute() {
                 Outbound Order Entry
               </Typography.Title>
               <Typography.Paragraph type="secondary" style={{ margin: 0 }}>
-                Review each SKU, allocate warehouses by waybill, and submit the full outbound order as a single payload.
+                Review each SKU, allocate warehouses by waybill, and submit the full outbound order
+                as a single payload.
               </Typography.Paragraph>
             </div>
             <Button
@@ -220,9 +259,15 @@ function OutboundRoute() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
-          <Card><Statistic title="SKU Count" value={stats.skuCount} /></Card>
-          <Card><Statistic title="Waybill Count" value={stats.waybillCount} /></Card>
-          <Card><Statistic title="Total Outbound Qty" value={stats.totalOutboundQty} /></Card>
+          <Card>
+            <Statistic title="SKU Count" value={stats.skuCount} />
+          </Card>
+          <Card>
+            <Statistic title="Waybill Count" value={stats.waybillCount} />
+          </Card>
+          <Card>
+            <Statistic title="Total Outbound Qty" value={stats.totalOutboundQty} />
+          </Card>
         </div>
 
         <Card>
@@ -235,7 +280,11 @@ function OutboundRoute() {
               <Alert
                 type="error"
                 message="Failed to load outbound order"
-                description={outboundQuery.error instanceof Error ? outboundQuery.error.message : 'Unknown error'}
+                description={
+                  outboundQuery.error instanceof Error
+                    ? outboundQuery.error.message
+                    : 'Unknown error'
+                }
                 showIcon
               />
             ) : rows.length === 0 ? (
@@ -267,6 +316,7 @@ type ColumnFactoryOptions = {
   warehouseOptionsBySku: Record<string, AvailableWarehouse[]>;
   onWarehouseFocus: (skuId: string) => Promise<void>;
   onWarehouseChange: (rowId: string, warehouseId: string | undefined) => void;
+  onBatchChange: (rowId: string, batchDate: number | undefined) => void;
   onQtyChange: (rowId: string, outboundQty: number | null) => void;
   onAddWarehouse: (rowId: string) => void;
   onDeleteRow: (rowId: string) => void;
@@ -318,10 +368,14 @@ function buildColumns(options: ColumnFactoryOptions) {
         const selectedWarehouse = warehouseOptions.find(
           (candidate) => candidate.warehouseId === row.warehouseId,
         );
+        const batchOptions = selectedWarehouse?.batches ?? [];
+        const availableQty = getAvailableQty(selectedWarehouse, row.batchDate);
         const canDeleteRow = options.canDeleteRow(row.id);
 
         return (
-          <FieldError error={options.rowErrors[row.id]?.warehouseId}>
+          <FieldError
+            error={options.rowErrors[row.id]?.warehouseId ?? options.rowErrors[row.id]?.batchDate}
+          >
             <Space direction="vertical" size={8} style={{ display: 'flex' }}>
               <Space.Compact style={{ width: '100%' }}>
                 <Select
@@ -340,6 +394,20 @@ function buildColumns(options: ColumnFactoryOptions) {
                   }}
                   allowClear
                 />
+                <Select
+                  value={row.batchDate}
+                  placeholder="Select batch"
+                  disabled={!selectedWarehouse?.isBatch}
+                  style={{ width: 180 }}
+                  options={batchOptions.map((batch) => ({
+                    label: `${formatBatchDate(batch.batchDate)} | Available ${batch.availableQty}`,
+                    value: batch.batchDate,
+                  }))}
+                  onChange={(batchDate) => {
+                    options.onBatchChange(row.id, batchDate);
+                  }}
+                  allowClear
+                />
                 <Button
                   icon={<Plus size={16} />}
                   aria-label="Add warehouse"
@@ -350,14 +418,16 @@ function buildColumns(options: ColumnFactoryOptions) {
                   danger
                   icon={<Trash2 size={16} />}
                   aria-label="Delete warehouse row"
-                  title={canDeleteRow ? 'Delete warehouse row' : 'At least one warehouse row is required'}
+                  title={
+                    canDeleteRow ? 'Delete warehouse row' : 'At least one warehouse row is required'
+                  }
                   disabled={!canDeleteRow}
                   onClick={() => options.onDeleteRow(row.id)}
                 />
               </Space.Compact>
               {selectedWarehouse ? (
                 <Typography.Text type="secondary">
-                  {selectedWarehouse.warehouseName} | Available Qty: {selectedWarehouse.availableQty}
+                  {selectedWarehouse.warehouseName} | Available Qty: {availableQty ?? '-'}
                 </Typography.Text>
               ) : null}
             </Space>
@@ -370,20 +440,28 @@ function buildColumns(options: ColumnFactoryOptions) {
       dataIndex: 'outboundQty',
       key: 'outboundQty',
       width: 180,
-      render: (value: number | undefined, row: OutboundDisplayRow) => (
-        <FieldError error={options.rowErrors[row.id]?.outboundQty}>
-          <InputNumber
-            value={value}
-            min={1}
-            precision={0}
-            style={{ width: '100%' }}
-            placeholder="Quantity"
-            onChange={(nextValue) => {
-              options.onQtyChange(row.id, nextValue);
-            }}
-          />
-        </FieldError>
-      ),
+      render: (value: number | undefined, row: OutboundDisplayRow) => {
+        const warehouse = (options.warehouseOptionsBySku[row.skuId] ?? []).find(
+          (candidate) => candidate.warehouseId === row.warehouseId,
+        );
+        const availableQty = getAvailableQty(warehouse, row.batchDate);
+
+        return (
+          <FieldError error={options.rowErrors[row.id]?.outboundQty}>
+            <InputNumber
+              value={value}
+              min={1}
+              max={availableQty}
+              precision={0}
+              style={{ width: '100%' }}
+              placeholder="Quantity"
+              onChange={(nextValue) => {
+                options.onQtyChange(row.id, nextValue);
+              }}
+            />
+          </FieldError>
+        );
+      },
     },
     {
       title: 'Actions',
@@ -404,13 +482,7 @@ function buildColumns(options: ColumnFactoryOptions) {
   ];
 }
 
-function FieldError({
-  error,
-  children,
-}: {
-  error?: string;
-  children: React.ReactNode;
-}) {
+function FieldError({ error, children }: { error?: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1">
       {children}

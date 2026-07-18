@@ -2,7 +2,7 @@
   "schemaVersion": "0.3.0",
   "openapi": {
     "file": "/Users/yzin/code/shelf/playground/apps/react/src/routes/outbound/mockoon-gen/openapi.yaml",
-    "sha256": "28da0e14095b46fb2e69beaefe9bbd600617038110222c7a635e1acd063b500c",
+    "sha256": "2961f397b10eb4238ca2dc94941923f7bb18acdb299005563a6f78e73385d34a",
     "origin": "manual",
     "reviewStatus": "confirmed"
   },
@@ -51,6 +51,14 @@
           {
             "path": "items[].waybills[].allocations[].warehouseId",
             "faker": "string.alphanumeric"
+          },
+          {
+            "path": "items[].waybills[].allocations[].batchDate",
+            "faker": "number.int",
+            "args": {
+              "min": 0,
+              "max": 1893456000000
+            }
           }
         ],
         "scenarios": [
@@ -60,7 +68,7 @@
             "headers": {
               "Content-Type": "application/json; charset=utf-8"
             },
-            "bodyTemplate": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": [{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"waybills\": [{\n  \"waybillNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"allocations\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"outboundQty\": {{faker 'number.int' min=1 max=9007199254740991}}\n}]\n}]\n}]\n}",
+            "bodyTemplate": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": [{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"waybills\": [{\n  \"waybillNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"allocations\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"batchDate\": {{faker 'number.int' min=0 max=1893456000000}},\n  \"outboundQty\": {{faker 'number.int' min=1 max=9007199254740991}}\n}]\n}]\n}]\n}",
             "origin": "generated",
             "enabled": true
           },
@@ -70,7 +78,17 @@
             "headers": {
               "Content-Type": "application/json; charset=utf-8"
             },
-            "bodyTemplate": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": [{{#repeat 20}}{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"waybills\": [{\n  \"waybillNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"allocations\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"outboundQty\": {{faker 'number.int' min=1 max=9007199254740991}}\n}]\n}]\n}{{/repeat}}]\n}",
+            "bodyTemplate": "{\n  \"orderId\": \"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\",\n  \"orderNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"status\": \"DRAFT\",\n  \"remark\": \"{{faker 'lorem.sentence'}}\",\n  \"items\": [{{#repeat 20}}{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"waybills\": [{\n  \"waybillNo\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"allocations\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"batchDate\": {{faker 'number.int' min=0 max=1893456000000}},\n  \"outboundQty\": {{faker 'number.int' min=1 max=9007199254740991}}\n}]\n}]\n}{{/repeat}}]\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "success-random-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"orderId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"orderNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"status\": {{#if (boolean)}}null{{else}}\"DRAFT\"{{/if}},\n  \"remark\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'lorem.sentence'}}\"{{/if}}{{/if}},\n  \"items\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"skuId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"waybills\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"waybillNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"allocations\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"warehouseId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"batchDate\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=1893456000000}}{{/if}},\n  \"outboundQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=1 max=9007199254740991}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}",
             "origin": "generated",
             "enabled": true
           },
@@ -91,16 +109,6 @@
               "Content-Type": "application/json; charset=utf-8"
             },
             "bodyTemplate": "{\n  \"code\": \"MOCK_ERROR\"\n}",
-            "origin": "generated",
-            "enabled": true
-          },
-          {
-            "name": "success-random-empty",
-            "statusCode": 200,
-            "headers": {
-              "Content-Type": "application/json; charset=utf-8"
-            },
-            "bodyTemplate": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"orderId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"orderNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"status\": {{#if (boolean)}}null{{else}}\"DRAFT\"{{/if}},\n  \"remark\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'lorem.sentence'}}\"{{/if}}{{/if}},\n  \"items\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"skuId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"waybills\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"waybillNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"allocations\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"warehouseId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"outboundQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=1 max=9007199254740991}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}",
             "origin": "generated",
             "enabled": true
           }
@@ -141,6 +149,16 @@
             "enabled": true
           },
           {
+            "name": "success-random-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"orderId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"orderNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"status\": {{#if (boolean)}}null{{else}}\"SUBMITTED\"{{/if}}\n}{{/if}}{{/if}}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
             "name": "success-empty",
             "statusCode": 200,
             "headers": {
@@ -157,16 +175,6 @@
               "Content-Type": "application/json; charset=utf-8"
             },
             "bodyTemplate": "{\n  \"code\": \"MOCK_ERROR\"\n}",
-            "origin": "generated",
-            "enabled": true
-          },
-          {
-            "name": "success-random-empty",
-            "statusCode": 200,
-            "headers": {
-              "Content-Type": "application/json; charset=utf-8"
-            },
-            "bodyTemplate": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"orderId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.numeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"orderNo\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"status\": {{#if (boolean)}}null{{else}}\"SUBMITTED\"{{/if}}\n}{{/if}}{{/if}}",
             "origin": "generated",
             "enabled": true
           }
@@ -197,6 +205,14 @@
           {
             "path": "warehouses[].warehouseName",
             "faker": "location.city"
+          },
+          {
+            "path": "warehouses[].batches[].batchDate",
+            "faker": "number.int",
+            "args": {
+              "min": 0,
+              "max": 1893456000000
+            }
           }
         ],
         "scenarios": [
@@ -206,7 +222,7 @@
             "headers": {
               "Content-Type": "application/json; charset=utf-8"
             },
-            "bodyTemplate": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouseName\": \"{{faker 'location.city'}}\",\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}}\n}]\n}",
+            "bodyTemplate": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": [{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouseName\": \"{{faker 'location.city'}}\",\n  \"isBatch\": {{faker 'datatype.boolean'}},\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}},\n  \"batches\": [{\n  \"batchDate\": {{faker 'number.int' min=0 max=1893456000000}},\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}}\n}]\n}]\n}",
             "origin": "generated",
             "enabled": true
           },
@@ -216,7 +232,17 @@
             "headers": {
               "Content-Type": "application/json; charset=utf-8"
             },
-            "bodyTemplate": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": [{{#repeat 20}}{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouseName\": \"{{faker 'location.city'}}\",\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}}\n}{{/repeat}}]\n}",
+            "bodyTemplate": "{\n  \"skuId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouses\": [{{#repeat 20}}{\n  \"warehouseId\": \"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\",\n  \"warehouseName\": \"{{faker 'location.city'}}\",\n  \"isBatch\": {{faker 'datatype.boolean'}},\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}},\n  \"batches\": [{\n  \"batchDate\": {{faker 'number.int' min=0 max=1893456000000}},\n  \"availableQty\": {{faker 'number.int' min=0 max=9007199254740991}}\n}]\n}{{/repeat}}]\n}",
+            "origin": "generated",
+            "enabled": true
+          },
+          {
+            "name": "success-random-empty",
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "bodyTemplate": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"skuId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"warehouses\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"warehouseId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"warehouseName\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'location.city'}}\"{{/if}}{{/if}},\n  \"isBatch\": {{#if (boolean)}}null{{else}}{{faker 'datatype.boolean'}}{{/if}},\n  \"availableQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=9007199254740991}}{{/if}},\n  \"batches\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"batchDate\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=1893456000000}}{{/if}},\n  \"availableQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=9007199254740991}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}",
             "origin": "generated",
             "enabled": true
           },
@@ -237,16 +263,6 @@
               "Content-Type": "application/json; charset=utf-8"
             },
             "bodyTemplate": "{\n  \"code\": \"MOCK_ERROR\"\n}",
-            "origin": "generated",
-            "enabled": true
-          },
-          {
-            "name": "success-random-empty",
-            "statusCode": 200,
-            "headers": {
-              "Content-Type": "application/json; charset=utf-8"
-            },
-            "bodyTemplate": "{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"skuId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"warehouses\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}[]{{else}}[{{#if (boolean)}}null{{else}}{{#if (boolean)}}{}{{else}}{\n  \"warehouseId\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'string.alphanumeric' '{length: { min: 0, max: 20}}'}}\"{{/if}}{{/if}},\n  \"warehouseName\": {{#if (boolean)}}null{{else}}{{#if (boolean)}}\"\"{{else}}\"{{faker 'location.city'}}\"{{/if}}{{/if}},\n  \"availableQty\": {{#if (boolean)}}null{{else}}{{faker 'number.int' min=0 max=9007199254740991}}{{/if}}\n}{{/if}}{{/if}}]{{/if}}{{/if}}\n}{{/if}}{{/if}}",
             "origin": "generated",
             "enabled": true
           }
